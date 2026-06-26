@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Wavelet-based Recovery Design – WARA</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../pages/detector-parameters.html" rel="next">
+<link href="../pages/attack-device.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-478590c5df418e4fa0b07ad45f1ae6f8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">WARA</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../index.html" aria-current="page"> 
+<span class="menu-text">WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/wangwwno1/WARA-PX4" target="_blank"> 
+<span class="menu-text">GitHub</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../#"> <i class="bi bi-file-pdf" role="img" aria-label="Paper PDF">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../pages/wavelet-partition.html">WARA Defense</a></li><li class="breadcrumb-item"><a href="../pages/wavelet-partition.html">Wavelet-based Recovery Design</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pages/attack-device.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Attack Device Specification</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">WARA Defense</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pages/wavelet-partition.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Wavelet-based Recovery Design</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pages/detector-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Detector Parameter Selection</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Evaluation Results</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pages/recovery-effectiveness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recovery Effectiveness</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pages/advanced-attack.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced Attack Waveforms</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pages/external-disturbance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Impact of External Disturbance</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#the-mallat-algorithm" id="toc-the-mallat-algorithm" class="nav-link" data-scroll-target="#the-mallat-algorithm">The Mallat Algorithm</a></li>
+  <li><a href="#online-wpd-with-buffer-mechanism" id="toc-online-wpd-with-buffer-mechanism" class="nav-link" data-scroll-target="#online-wpd-with-buffer-mechanism">Online WPD with Buffer Mechanism</a>
+  <ul class="collapse">
+  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#buffer-size-derivation" id="toc-buffer-size-derivation" class="nav-link" data-scroll-target="#buffer-size-derivation">Buffer Size Derivation</a></li>
+  <li><a href="#buffer-design" id="toc-buffer-design" class="nav-link" data-scroll-target="#buffer-design">Buffer Design</a></li>
+  <li><a href="#three-procedures" id="toc-three-procedures" class="nav-link" data-scroll-target="#three-procedures">Three Procedures</a></li>
+  </ul></li>
+  <li><a href="#wpt-partition" id="toc-wpt-partition" class="nav-link" data-scroll-target="#wpt-partition">WPT Partition</a>
+  <ul class="collapse">
+  <li><a href="#frequency-band-allocation" id="toc-frequency-band-allocation" class="nav-link" data-scroll-target="#frequency-band-allocation">Frequency Band Allocation</a></li>
+  <li><a href="#single-imu-vs.-multi-imu-mode" id="toc-single-imu-vs.-multi-imu-mode" class="nav-link" data-scroll-target="#single-imu-vs.-multi-imu-mode">Single-IMU vs.&nbsp;Multi-IMU Mode</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../pages/wavelet-partition.html">WARA Defense</a></li><li class="breadcrumb-item"><a href="../pages/wavelet-partition.html">Wavelet-based Recovery Design</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Wavelet-based Recovery Design</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>WARA uses <strong>wavelet packet decomposition</strong> (WPD) to separate acoustic attack interference from benign sensor signals. Unlike classical wavelet transforms that only decompose low-frequency components, WPD decomposes <em>both</em> low- and high-frequency bands recursively, producing a full binary tree of sub-bands. This allows WARA to isolate attack interference localized in specific frequency bands while preserving the drone’s motion signal.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../figures/WPT-Tree-Structure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="3-Level Wavelet Packet Decomposition"><img src="../figures/WPT-Tree-Structure.png" class="img-fluid figure-img" style="width:90.0%" alt="3-Level Wavelet Packet Decomposition"></a></p>
+<figcaption>3-Level Wavelet Packet Decomposition</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-mallat-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="the-mallat-algorithm">The Mallat Algorithm</h2>
+<p>WPD is implemented via the <strong>Mallat algorithm</strong>, which performs fast level-wise transformations using a pair of low-pass (<span class="math inline">\(h[\cdot]\)</span>) and high-pass (<span class="math inline">\(g[\cdot]\)</span>) filter banks. Given an input sequence <span class="math inline">\(x[\cdot]\)</span> of length <span class="math inline">\(N\)</span> and filter length <span class="math inline">\(F\)</span>, the decomposition produces two sequences of wavelet coefficients:</p>
+<p><span class="math display">\[w_{a}[k] = \sum^F_{i=0}x[2k-i]h[i];\quad w_{d}[k] = \sum^F_{i=0}x[2k-i]g[i]\]</span></p>
+<p>where <span class="math inline">\(k=0,1,...,\frac{N}{2}-1\)</span>, and <span class="math inline">\(w_{a}[k]\)</span> and <span class="math inline">\(w_{d}[k]\)</span> are the <em>approximate</em> and <em>detail</em> wavelet coefficients. The decomposition propagates recursively: approximate coefficients go to the left child and detail coefficients go to the right child in the WPT tree.</p>
+<p><strong>Reconstruction</strong> reverses the process using synthesis filters <span class="math inline">\(h^*[\cdot]\)</span> and <span class="math inline">\(g^*[\cdot]\)</span>:</p>
+<p><span class="math display">\[y[2k] = \sum^{F/2}_{i=0} (w_{d}[k{-}i]g^*[2i] + w_{a}[k{-}i]h^*[2i])\]</span></p>
+<p><span class="math display">\[y[2k{+}1] = \sum^{F/2}_{i=0}(w_{d}[k{-}i]g^*[2i{+}1] + w_{a}[k{-}i]h^*[2i{+}1])\]</span></p>
+<p>When the filter banks are <strong>orthogonal</strong> (<span class="math inline">\(g[\cdot]\cdot g^*[\cdot]=h[\cdot]\cdot h^*[\cdot]=1/F\)</span>), the decomposition and reconstruction form an invertible linear transformation — WPD preserves the energy and details of the input signal. If <span class="math inline">\(w_{a}[k]\)</span> or <span class="math inline">\(w_d[k]\)</span> is missing, the corresponding term in the reconstruction is simply zero.</p>
+<p>Decomposing to level-<span class="math inline">\(L\)</span> requires the input length to be an exact multiple of <span class="math inline">\(2^L\)</span>. When the input is too short, we apply <strong>reflect padding</strong> at the tail to ensure continuity and alleviate edge distortion in the reconstructed signal.</p>
+</section>
+<section id="online-wpd-with-buffer-mechanism" class="level2">
+<h2 class="anchored" data-anchor-id="online-wpd-with-buffer-mechanism">Online WPD with Buffer Mechanism</h2>
+<section id="motivation" class="level3">
+<h3 class="anchored" data-anchor-id="motivation">Motivation</h3>
+<p>A naive WPD implementation stores <em>all</em> historical wavelet coefficients at every tree level, causing exponential space growth with tree depth — far exceeding the memory of typical FC boards. Processing all historical coefficients also exceeds their computational capacity. WARA addresses both problems with a <strong>buffer mechanism</strong> that reuses past computation results.</p>
+</section>
+<section id="buffer-size-derivation" class="level3">
+<h3 class="anchored" data-anchor-id="buffer-size-derivation">Buffer Size Derivation</h3>
+<p>WARA’s goal is to reconstruct only the latest induced signal estimate <span class="math inline">\(\hat{A}_P(t)\)</span> to compute the recovered measurement. According to the Mallat reconstruction equations, reconstructing at level-0 requires each level-1 node to provide at least <span class="math inline">\(F/2\)</span> wavelet coefficients. Let <span class="math inline">\(m(L)\)</span> be the number of coefficients each level-<span class="math inline">\(L\)</span> node must provide to level <span class="math inline">\(L-1\)</span>:</p>
+<p><span class="math display">\[m(L)=\left\{
+\begin{array}{ll}
+\frac{F}{2} &amp; L=1 \\
+\frac{F}{2} + \lceil \frac{m(L-1)-2}{2} \rceil &amp; L\ge 2
+\end{array}
+\right.\]</span></p>
+<p>The term <span class="math inline">\(\frac{F}{2}\)</span> accounts for reconstructing the last two outputs; <span class="math inline">\(\lceil \frac{m(L)-2}{2} \rceil\)</span> covers the remaining outputs. Since <span class="math inline">\(\lceil \frac{m(L)-2}{2} \rceil &lt; \frac{m(L)}{2}\)</span>, we can bound this by a simpler recurrence <span class="math inline">\(n(L)\)</span>:</p>
+<p><span class="math display">\[m(L) &lt; n(L) = F\cdot(1-\frac{1}{2^L}) &lt; F;\quad L\geq 1\]</span></p>
+<p>Therefore, <strong>storing the last <span class="math inline">\(F\)</span> wavelet coefficients at each node is sufficient</strong> for flawless reconstruction of <span class="math inline">\(\hat{A}_P(t)\)</span>. To keep these <span class="math inline">\(F\)</span> coefficients up to date, the decomposition requires <span class="math inline">\(3F\)</span> inputs. Reflect padding provides the last <span class="math inline">\(F\)</span> inputs, reducing the actual input length to <span class="math inline">\(2F\)</span>.</p>
+</section>
+<section id="buffer-design" class="level3">
+<h3 class="anchored" data-anchor-id="buffer-design">Buffer Design</h3>
+<p>Each WPT node maintains two buffers: - <strong>Decomposition buffer</strong> (length <span class="math inline">\(2F\)</span>) — stores recent sensor samples or parent coefficients for decomposition - <strong>Reconstruction buffer</strong> (length <span class="math inline">\(F+2\)</span>) — stores output coefficients for reconstruction (the extra 2 slots ensure proper data alignment)</p>
+<p>Each node also tracks a <strong>starting index</strong> <span class="math inline">\(i_{start}(t)\)</span>, initialized based on the node’s level <span class="math inline">\(L\)</span> and filter length <span class="math inline">\(F\)</span>:</p>
+<p><span class="math display">\[i_{start}(0) = ((F-1) \gg L) \mathbin{\&amp;} 1\]</span></p>
+<p>where <span class="math inline">\(\gg\)</span> is bit-wise right-shift and <span class="math inline">\(\&amp;\)</span> is bit-wise AND. When a new input enters the decomposition buffer, the index updates: <span class="math inline">\(i_{start}(t) = (i_{start}(t-1)+1) \bmod 2\)</span>. When two new inputs arrive at a level-<span class="math inline">\(L\)</span> node, the decomposition buffer of its level-<span class="math inline">\((L+1)\)</span> child shifts backward by one element to store the new wavelet coefficient. The starting index is then used to slice the correct subsequence from each buffer for wavelet decomposition and reconstruction — ensuring the online implementation remains consistent with the Mallat algorithm.</p>
+</section>
+<section id="three-procedures" class="level3">
+<h3 class="anchored" data-anchor-id="three-procedures">Three Procedures</h3>
+<p>WARA’s online WPD pipeline is driven by three procedures. Buffers shift forward as new sensor data arrives, and shift flags propagate from root to leaves, synchronizing computations across tree levels.</p>
+<p><strong>1. Buffer Management (ManageBuffer)</strong></p>
+<p>Each node’s shift flag is determined by its parent: a child shifts its buffer only when the parent’s buffer has shifted <em>and</em> the parent’s starting index equals 1 (indicating two new inputs have been accumulated). If no shift is needed, the node is skipped. When a shift occurs, the buffer slides backward by one position, discarding the oldest sample.</p>
+<p><strong>2. Online Decomposition</strong></p>
+<p>For each new sensor sample <span class="math inline">\(\tilde{x}(t)\)</span>: 1. Shift the root node buffer and insert <span class="math inline">\(\tilde{x}(t)\)</span> at the end 2. Traverse the tree depth-first. For each non-root node: - Manage buffer shift (propagated from parent) - Slice the parent’s input buffer starting at <span class="math inline">\(i_{start}(t)\)</span> - Apply the Mallat decomposition (Eq.1) to produce <span class="math inline">\(w[k]\)</span> - Store the coefficients in the current node’s buffer</p>
+<p><strong>3. Online Reconstruction with Recovery</strong></p>
+<p>For each new sample from the primary IMU: 1. Traverse the tree depth-first. At each leaf node: - If the node is <strong>anomalous and LF</strong>: subtract the corresponding coefficient from a redundant IMU instance, cancelling out benign motion while preserving the attack residual - If the node is <strong>anomalous and HF</strong>: zero out the coefficients (attack-only band) - If the node is <strong>attack-free</strong>: preserve coefficients as-is 2. When both children of a parent node are ready, reconstruct the parent’s output via the Mallat synthesis equations (Eqs.2–3), propagating upward 3. Read the recovered attack estimate <span class="math inline">\(\hat{A}_P(t)\)</span> from the root node’s reconstruction buffer 4. Return <span class="math inline">\(\hat{x}_P(t) = \tilde{x}_P(t) - \hat{A}_P(t)\)</span> — the recovered benign measurement</p>
+</section>
+</section>
+<section id="wpt-partition" class="level2">
+<h2 class="anchored" data-anchor-id="wpt-partition">WPT Partition</h2>
+<p>The partition of wavelet packets determines which frequency bands are monitored for attack interference. We use the <strong>Symlets 2</strong> wavelet (<span class="math inline">\(F=4\)</span>) <span class="citation" data-cites="daubechies1988orthonormal">(<a href="#ref-daubechies1988orthonormal" role="doc-biblioref">Daubechies 1988</a>)</span> and configure the WPT based on the drone’s motion signal characteristics.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../figures/WPT Packet Configuration.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Wavelet Packet Configuration (Single-IMU and Multi-IMU modes)"><img src="../figures/WPT Packet Configuration.png" class="img-fluid figure-img" style="width:95.0%" alt="Wavelet Packet Configuration (Single-IMU and Multi-IMU modes)"></a></p>
+<figcaption>Wavelet Packet Configuration (Single-IMU and Multi-IMU modes)</figcaption>
+</figure>
+</div>
+<section id="frequency-band-allocation" class="level3">
+<h3 class="anchored" data-anchor-id="frequency-band-allocation">Frequency Band Allocation</h3>
+<table style="width:100%;border-collapse:separate;border-spacing:0 4px;">
+<colgroup>
+<col style="width:22%">
+<col style="width:14%">
+<col style="width:16%">
+<col style="width:48%">
+</colgroup>
+<tbody><tr>
+<th>
+Band
+</th>
+<th>
+Range
+</th>
+<th>
+Depth
+</th>
+<th>
+Purpose
+</th>
+</tr>
+<tr>
+<td>
+<b>LF (Low Frequency)</b>
+</td>
+<td>
+0–20 Hz
+</td>
+<td>
+Level 6
+</td>
+<td>
+Captures drone motion signals (0–5 Hz) plus low-frequency attack interference near the motion band. Decomposed deeper for fine-grained isolation.
+</td>
+</tr>
+<tr>
+<td>
+<b>HF (High Frequency)</b>
+</td>
+<td>
+20–100 Hz
+</td>
+<td>
+Level 4
+</td>
+<td>
+Captures attack interference above the motion band. Shallower depth saves computation.
+</td>
+</tr>
+<tr>
+<td>
+<b>Rejected</b>
+</td>
+<td>
+&gt;100 Hz
+</td>
+<td>
+—
+</td>
+<td>
+Removed by the autopilot’s hardware low-pass filter; not processed.
+</td>
+</tr>
+</tbody></table>
+<p>The LF band is slightly broader than the motion signal band (0–5 Hz) to accurately capture attack interference that falls <em>within or near</em> the motion signal frequencies — the most critical type of interference for flight stability.</p>
+</section>
+<section id="single-imu-vs.-multi-imu-mode" class="level3">
+<h3 class="anchored" data-anchor-id="single-imu-vs.-multi-imu-mode">Single-IMU vs.&nbsp;Multi-IMU Mode</h3>
+<p>The assignment of level-6 wavelet packets depends on whether a redundant IMU instance is available:</p>
+<p><strong>Single-IMU mode:</strong> Wavelet packets <span class="math inline">\(w_{aaaddd}\)</span> through <span class="math inline">\(w_{aaadad}\)</span> are designated as <strong>HF attack packets</strong> and zeroed out during recovery. The remaining level-6 packets are preserved as-is to retain the motion signal. This conservative approach avoids distorting benign data but cannot remove low-frequency attack interference.</p>
+<p><strong>Multi-IMU mode:</strong> All level-6 wavelet packets are treated as <strong>LF attack packets</strong> and replaced with the corresponding coefficients from a redundant (reserved) IMU instance. Since the reserved IMU is unlikely to experience the <em>same</em> attack interference in the exact same time-frequency bins, its coefficients provide a clean substitute — enabling removal of even low-frequency interference without distorting the motion signal.</p>
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-daubechies1988orthonormal" class="csl-entry" role="listitem">
+Daubechies, Ingrid. 1988. <span>“Orthonormal Bases of Compactly Supported Wavelets.”</span> <em>Communications on Pure and Applied Mathematics</em> 41 (7): 909–96.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/wangwwno1\.github\.io\/WARA-website\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../pages/attack-device.html" class="pagination-link" aria-label="Attack Device Specification">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Attack Device Specification</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../pages/detector-parameters.html" class="pagination-link" aria-label="Detector Parameter Selection">
+        <span class="nav-page-text">Detector Parameter Selection</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Yunbo Wang, Cong Sun, Qiaosen Liu. Xidian University.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Built with Quarto</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>
