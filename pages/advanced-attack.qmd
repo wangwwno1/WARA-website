@@ -1,0 +1,58 @@
+---
+title: "Advanced Attack Waveforms"
+---
+
+## Side-Swing and Switch Attacks
+
+In conventional acoustic attacks, the oscillating induced signal contributes roughly the same amount to inertial measurements in both directions, limiting the accumulated error. To develop more capable attacks, prior work has introduced two signal modulation techniques [@tu2018injected]:
+
+- **Side-swing attack** — The adversary increases the amplitude when the induced signal is in the target direction and decreases it otherwise, producing a net directional bias.
+- **Switch attack** — The attacker switches the acoustic frequency to keep the induced signal consistently in the same direction.
+
+Both attacks induce **low-frequency distortion in the target direction**, allowing the adversary to not only disrupt sensor readings but also deliver implicit control and manipulate drone motion. These are substantially more dangerous than unmodulated acoustic injections.
+
+## Evaluation Setup
+
+We evaluate WARA's recovery performance against advanced attacks in SITL simulation. The primary IMU is targeted with either a side-swing or switch attack at an induced frequency $f_i = 1$ Hz [@tu2018injected]. The reserved IMUs are targeted with regular simulated attacks at $f_i = 20$ Hz. All attacks use an amplitude of $G_i = 2.0$ rad/s. WARA operates in **multi-IMU mode** to leverage the redundant IMUs for low-frequency interference removal.
+
+## WARA Recovery Results
+
+The advanced attacks inject strong low-frequency interference into the primary IMU measurements, causing significant deviations from the ground truth. WARA's multi-IMU mode identifies the affected LF wavelet packets and replaces them with benign coefficients from a redundant — but also compromised — IMU instance.
+
+::: {.fig-grid-2}
+
+![Recovered gyroscope measurements (SITL, $G_i = 2.0$ rad/s, $f_i = 1$ Hz)](../figures/Waveform%20Test/Recovered%20gyroscope%20measurements%20on%20the%20Side-Swing%20and%20Switch%20attacks.png){.lightbox}
+
+![Noise amplitude spectra (SITL, $G_i = 2.0$ rad/s, $f_i = 1$ Hz)](../figures/Waveform%20Test/Noise%20amplitude%20spectra%20of%20gyro%20recovery%20on%20the%20Side-Swing%20and%20Switch%20attacks.png){.lightbox}
+
+:::
+
+The recovered measurements show substantially reduced interference in the attacked frequency bands, enabling the drone to maintain stability and complete its mission.
+
+## Comparison with UnRocker and Single-IMU WARA
+
+In contrast, both UnRocker and WARA's single-IMU mode are ineffective against these advanced attacks:
+
+::: {.fig-grid-2}
+
+![Recovered gyroscope measurements: WARA vs UnRocker vs Single-IMU WARA (SITL, $G_i = 2.0$ rad/s, $f_i = 1$ Hz)](../figures/Waveform%20Test/Fig.XX%20Recovered%20gyroscope%20measurements%20(Modulated%20Attack%20Comparison).png){.lightbox}
+
+![Noise amplitude spectra comparison (SITL, $G_i = 2.0$ rad/s, $f_i = 1$ Hz)](../figures/Waveform%20Test/Fig.XX%20Noise%20amplitude%20spectrum%20(Modulated%20Attack%20Comparison).png){.lightbox}
+
+:::
+
+Their recovered results deviate significantly from the ground truth, and the noise peaks in the 0–5 Hz band confirm that LF interference persists after their recovery processes. These results demonstrate that WARA's **multi-IMU mode is essential** for removing low-frequency attack interference — single-IMU recovery and deep-learning denoising both fail when the attack energy is concentrated within the motion signal band.
+
+## Limitations
+
+We investigated WARA's boundaries by varying attack configurations. Increasing $G_i$ on the primary IMU above 2.0 rad/s destabilizes the flight attitude, triggering a *no position* fail-safe due to a false alarm in the GNSS sensor. Simultaneously attacking all IMUs with side-swing or switch attacks results in a crash — these attacks all produce LF interference, creating overlapping distortion within the narrow motion signal band (0–5 Hz). However, simultaneously crafting multiple independent modulated signals into this band remains challenging, as discussed in the paper.
+
+## Impact on Closed-Loop Control
+
+To directly quantify recovery quality at the control level, we measure the **mean attitude error** across roll, pitch, and yaw axes. We conducted 10 SITL flights per configuration. The attitude error is the absolute deviation between the estimated Euler angles and the ground-truth states.
+
+![Mean attitude error under Switch Attack ($G_i = 2.0$ rad/s)](../figures/Fig.XX%20Attitude%20Error%20Comparison.png){.lightbox width=95%}
+
+Under **attack-free conditions**, WARA maintains a performance profile nearly identical to the vanilla PX4 autopilot, with errors consistently below 0.02 rad — confirming WARA introduces no functional degradation during routine operations.
+
+Under the **Switch Attack**, the vanilla autopilot's attitude error surges to 0.5–1.0 rad, a magnitude that triggers an immediate crash. In contrast, WARA suppresses the error to 0.05–0.10 rad across all axes. Although this remains higher than the benign state, it stays well within the autopilot's compensation envelope — the drone maintains flight attitude and completes its mission.

@@ -1,0 +1,76 @@
+---
+title: "Attack Device Specification"
+---
+
+## Overview
+
+We designed a low-cost (\$28) acoustic injection attack device capable of **simultaneously targeting multiple heterogeneous IMUs** [@son2015rocking; @trippel2017walnut; @tu2018injected; @jeong2023rocking] on a drone — including both gyroscopes and accelerometers. To our knowledge, this is the first work to report simultaneous acoustic injection attacks at different frequencies against multiple IMUs. The compact unit ($9 \times 7\ \text{cm}^2$) supports two complementary attack modes: **remote attacks** via ultrasonic emitters, and **touch-based attacks** via piezoelectric transducer (PZT) discs mounted directly on the flight controller.
+
+## Hardware
+
+![Wiring diagram of the attack device](../figures/PZT%20Layout/PZT%20Layout%20-%20CUAV%20V5+%20-%20Circuit%20Layout.JPG){.lightbox width=85%}
+
+The attack device uses a **Raspberry Pi Zero 2W** as the microcontroller, which controls an **L298N motor driver module** to generate multiple PWM signals. Compared to prior work that relies on a digital-to-analog converter and power amplifier chain [@gao2023exploring], we introduce a **DC-DC boost converter** (MT3608, stepping 5V up to 20V) to drive the transducers more efficiently. A mini power bank (5V/2A) powers the entire unit.
+
+The device supports two transducer types, each serving a distinct role:
+
+- **Ultrasonic emitters** — for remote attacks at a distance. These are the core attack scenario, enabling multi-IMU simultaneous injection without physical contact.
+- **PZT discs** — for touch-based attacks attached directly to the flight controller. These achieve stronger amplitudes and can penetrate the **physical shielding** found on commercial IMUs. For instance, the CUAV V5+ board encases its IMU sensors in a thick metal block that effectively reduces remote attack amplitudes. Touch-based PZT attacks significantly weaken this protection, allowing us to evaluate WARA's recovery robustness across a broader range of IMU models.
+
+By adjusting pulse-width and frequency, the microcontroller independently controls the amplitude and frequency of the acoustic signal on each PWM channel. Generally, this device achieves remote attack amplitudes ranging from **0.2 to 2.0 rad/s** on each targeted IMU — broader coverage than prior work [@jeong2023rocking; @gao2023exploring].
+
+## Remote Attack in Lab Setting
+
+We demonstrated remote multi-IMU attacks in a laboratory setting. Commercial flight controllers typically equip multiple heterogeneous IMUs for redundancy, and each IMU model has a distinct resonance frequency band. Because these bands rarely overlap, an attacker cannot compromise all IMUs with a single acoustic frequency — hence the need for **simultaneous multi-frequency injection**.
+
+For each target IMU, we assemble a dedicated $2 \times 2$ ultrasonic emitter array placed 25 cm from the flight controller. Each array emits acoustic signals tuned to the resonance frequency band of its target IMU. During evaluation, the drone motors were armed to assess the impact of motor noise on attack effectiveness.
+
+::: {.video-grid}
+
+::: {.video-card}
+**Multi-IMU Remote Attack Demonstration (Lab)**
+
+{{< video https://youtu.be/HqhufvUzA5o >}}
+:::
+
+:::
+
+## From Emitter Arrays to Closer-Range Attacks
+
+Interestingly, we observed that a **single ultrasonic emitter** at 7 cm can achieve similar attack amplitudes as a full $2 \times 2$ array at 25 cm. Inspired by this, we developed closer-range attacks at just 1 cm to further increase attack intensity. This compact setup — a single emitter placed near the IMU — can be deployed directly on the drone for real-world flight tests, achieving attack amplitudes up to ~2.2 rad/s on the BMI055 IMU.
+
+Although our prototype is limited to short range, long-range attacks remain viable with high-power hardware (e.g., a Genasys LRAD 1950XL [@genasys2025lrad] could achieve equivalent intensity at over 12 meters [@son2015rocking]).
+
+## Transducer Layout on Flight Controllers
+
+Transducers are positioned directly above each target IMU. IMU locations are determined from public board schematics or through trial-and-error on an identical board.
+
+::: {.layout-grid}
+
+![CUAV V5+](../figures/PZT%20Layout/PZT%20Layout%20-%20CUAV%20V5+.png){.lightbox}
+
+![Pixhawk 6C Mini](../figures/PZT%20Layout/Transducer%20Layout%20-%206C%20Mini%20Remote.png){.lightbox}
+
+![Mounted on F330 quadcopter](../figures/PZT%20Layout/Drone%20Layout%20-%206C%20Mini%20Remote.jpg){.lightbox}
+
+:::
+
+## Real-World Flight Tests
+
+The attack device was deployed on an F330 quadcopter for real-world flight testing. Even at low amplitudes (~0.20 rad/s), remote attacks can cause an unprotected drone to crash.
+
+::: {.video-grid}
+
+::: {.video-card}
+**F330 Remote Attack → Crash (Real-World, 0.20 rad/s)**
+
+{{< video https://youtu.be/Bm8eF30axdE >}}
+:::
+
+::: {.video-card}
+**F330 Dual-IMU Attack on Vanilla ArduPilot (No WARA)**
+
+{{< video https://youtu.be/ixKhjv_T_vQ >}}
+:::
+
+:::

@@ -1,0 +1,54 @@
+project:
+  type: website
+
+website:
+  title: "WARA"
+  page-navigation: true
+  navbar:
+    background: dark
+    left:
+      - text: "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV"
+        href: index.qmd
+    right:
+      - text: "GitHub"
+        href: https://github.com/wangwwno1/WARA-PX4
+        target: _blank
+      - icon: file-pdf
+        href: "#"
+        aria-label: "Paper PDF"
+  sidebar:
+    style: docked
+    collapse-level: 1
+    contents:
+      - text: "Home"
+        href: index.qmd
+      - text: "Attack Device Specification"
+        href: pages/attack-device.qmd
+      - section: "WARA Defense"
+        contents:
+          - text: "Wavelet-based Recovery Design"
+            href: pages/wavelet-partition.qmd
+          - text: "Detector Parameter Selection"
+            href: pages/detector-parameters.qmd
+      - section: "Evaluation Results"
+        contents:
+          - text: "Recovery Effectiveness"
+            href: pages/recovery-effectiveness.qmd
+          - text: "Advanced Attack Waveforms"
+            href: pages/advanced-attack.qmd
+          - text: "Impact of External Disturbance"
+            href: pages/external-disturbance.qmd
+  page-footer:
+    left: "© 2026 Yunbo Wang, Cong Sun, Qiaosen Liu. Xidian University."
+    right: "Built with Quarto"
+
+format:
+  html:
+    theme: zephyr
+    css: styles.css
+    toc: true
+    toc-location: left
+    code-copy: true
+    lightbox: true
+    bibliography: [refs.bib, refs-custom.bib]
+    citeproc: true

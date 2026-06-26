@@ -1,0 +1,57 @@
+=== YOUTUBE LINKS (11 total) ===
+
+https://youtu.be/9KQJXdmpxQ0
+  Title: F330 Dual IMU Remote Attack Recovery (Real-World)
+
+https://youtu.be/Bm8eF30axdE
+  Title: F330 Dual IMU Remote Attack Demonstration (Real-World, 0.20 rad/s)
+
+https://youtu.be/CIe-UB87nRo
+  Title: WARA Navio2 HITL Simulation
+
+https://youtu.be/EtRTMFoqkLA
+  Title: UnRocker Navio2 HITL Simulation
+
+https://youtu.be/HqhufvUzA5o
+  Title: Multi-IMU Remote Attack Demonstration (Lab Setting)
+
+https://youtu.be/Jy8DYvhUaSE
+  Title: WARA CUAV V5+ HITL Simulation
+
+https://youtu.be/QuCzp0DWLyM
+  Title: VIMU CUAV V5+ HITL Simulation
+
+https://youtu.be/beH2WQqdEng
+  Title: ZD550 CUAV V5+ Simulated IMU Attack Recovery
+
+https://youtu.be/c-nOE6so44M
+  Title: ZD550 CUAV V5+ Real-World IMU Attack Recovery
+
+https://youtu.be/ixKhjv_T_vQ
+  Title: F330  Pix 6C Mini Dual IMU Attack on vanilla ArduPilot (Real-World)
+
+https://youtu.be/w9hsJEjAnTY
+  Title: UnRocker Navio2 HITL Simulation No Attack
+
+=== PAGE TEXT CONTENT (10 blocks) ===
+
+上传的图片已保存。要查看或更改图片，请切换页眉类型。
+---
+WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV
+---
+We develop more capable acoustic attacks that simultaneously target multiple heterogeneous IMUs on a drone. Our experiments demonstrate that these attacks, whether remote or touch-based, are effective in disabling the IMU redundancy mechanism on FC boards. The touch-based attack even effectively bypasses the physical shielding on commercial FC boards.
+---
+We develop WARA, a novel wavelet-based approach to recover benign signals from compromised IMU measurements. WARA separates the benign signal components from the compromised data using wavelet packet decomposition. This design allows WARA to withstand simultaneous acoustic attacks across all the IMU instances, resulting in a more persistent and durable recovery.
+---
+We implement WARA on the PX4 autopilot and demonstrate that WARA meets the time and resource requirements of real hardware. In the hardware-in-the-loop (HITL) simulation, WARA achieves recovery durations longer than the SOTA PBAR approach, the deep-learning-based denoising approach, classic heuristic filters, and specification-aware recovery.
+---
+In real-world attack tests, WARA sustained flight for 2 to 5 minutes under attack and landed safely.
+---
+We adhere to the open science policy. All source code and datasets for both simulations and real-world experiments will be publicly available on Zenodo.
+---
+Comparison with state-of-the-art defense methods.
+---
+Real-World Flight Demonstration
+---
+2. Recovery Effectiveness
+---
