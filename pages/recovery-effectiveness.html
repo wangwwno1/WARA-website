@@ -171,7 +171,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../pages/recovery-effectiveness.html">Evaluation Results</a></li><li class="breadcrumb-item"><a href="../pages/recovery-effectiveness.html">Recovery Effectiveness</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../pages/recovery-effectiveness.html">Supplemental Results</a></li><li class="breadcrumb-item"><a href="../pages/recovery-effectiveness.html">Recovery Effectiveness</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -192,7 +192,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../pages/attack-device.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Attack Device Specification</span></a>
+ <span class="menu-text">Attack Device Design</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -221,7 +221,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Evaluation Results</span></a>
+ <span class="menu-text">Supplemental Results</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -247,8 +247,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#offline-touch-based-real-world-attack" id="toc-offline-touch-based-real-world-attack" class="nav-link active" data-scroll-target="#offline-touch-based-real-world-attack">Offline: Touch-Based Real-World Attack</a></li>
-  <li><a href="#hitl-accelerometer-attack" id="toc-hitl-accelerometer-attack" class="nav-link" data-scroll-target="#hitl-accelerometer-attack">HITL: Accelerometer Attack</a></li>
+  <li><a href="#hitl-accelerometer-attack" id="toc-hitl-accelerometer-attack" class="nav-link active" data-scroll-target="#hitl-accelerometer-attack">HITL: Accelerometer Attack</a></li>
   <li><a href="#comparison-with-heuristic-filters" id="toc-comparison-with-heuristic-filters" class="nav-link" data-scroll-target="#comparison-with-heuristic-filters">Comparison with Heuristic Filters</a></li>
   </ul>
 </nav>
@@ -260,7 +259,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../pages/recovery-effectiveness.html">Evaluation Results</a></li><li class="breadcrumb-item"><a href="../pages/recovery-effectiveness.html">Recovery Effectiveness</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../pages/recovery-effectiveness.html">Supplemental Results</a></li><li class="breadcrumb-item"><a href="../pages/recovery-effectiveness.html">Recovery Effectiveness</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Recovery Effectiveness</h1>
 </div>
@@ -337,45 +336,33 @@ To thoroughly compare recovery *quality* without the confounding effect of proce
 Both methods effectively suppress the acoustic injection attacks — reduced sensor fluctuations and diminished attack signal peaks confirm this. However, UnRocker's recovered measurements **deviate from the drone's actual state**. When the actual pitch rate exceeds 1.0 rad/s, UnRocker returns near-zero output — the deep model distorts benign motion signals during recovery. The noise amplitude spectrum reveals new peaks in the 0–5 Hz band absent before recovery, confirming UnRocker introduces low-frequency signal distortion.
 
 WARA's **orthogonal wavelet packet transform** preserves drone motion signals while efficiently removing induced signals. Because orthogonal WPD is an invertible linear transformation, it preserves the energy and details of the input — benign signal components pass through recovery intact. 
--->
-<section id="offline-touch-based-real-world-attack" class="level3">
-<h3 class="anchored" data-anchor-id="offline-touch-based-real-world-attack">Offline: Touch-Based Real-World Attack</h3>
-<p>We further compare recovery against <strong>touch-based acoustic attacks</strong> on the ICM-42688P gyroscope sensor, where PZT discs are attached directly to the flight controller for stronger attack amplitudes.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../figures/RealWorld Offline - UnRocker/OfflineEval_RealAttack_sensor_gyro_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Recovered gyroscope measurements (touch-based, G_i = 1.9 rad/s)"><img src="../figures/RealWorld Offline - UnRocker/OfflineEval_RealAttack_sensor_gyro_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered gyroscope measurements (touch-based, G_i = 1.9 rad/s)"></a></p>
-<figcaption>Recovered gyroscope measurements (touch-based, <span class="math inline">\(G_i = 1.9\)</span> rad/s)</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../figures/RealWorld Offline - UnRocker/OfflineEval_RealAttack_sensor_gyro_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Noise amplitude spectra of gyroscope recovery (touch-based, G_i = 1.9 rad/s)"><img src="../figures/RealWorld Offline - UnRocker/OfflineEval_RealAttack_sensor_gyro_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectra of gyroscope recovery (touch-based, G_i = 1.9 rad/s)"></a></p>
-<figcaption>Noise amplitude spectra of gyroscope recovery (touch-based, <span class="math inline">\(G_i = 1.9\)</span> rad/s)</figcaption>
-</figure>
-</div>
-</section>
+
+### Offline: Touch-Based Real-World Attack
+
+We further compare recovery against **touch-based acoustic attacks** on the ICM-42688P gyroscope sensor, where PZT discs are attached directly to the flight controller for stronger attack amplitudes.
+
+![Recovered gyroscope measurements (touch-based, $G_i = 1.9$ rad/s)](../figures/RealWorld%20Offline%20-%20UnRocker/OfflineEval_RealAttack_sensor_gyro_lineplot.png){.lightbox width=95%}
+
+![Noise amplitude spectra of gyroscope recovery (touch-based, $G_i = 1.9$ rad/s)](../figures/RealWorld%20Offline%20-%20UnRocker/OfflineEval_RealAttack_sensor_gyro_fftplot.png){.lightbox width=95%}
+ -->
 <section id="hitl-accelerometer-attack" class="level3">
 <h3 class="anchored" data-anchor-id="hitl-accelerometer-attack">HITL: Accelerometer Attack</h3>
+<p>In both real-world and simulated attacks, UnRocker’s recovery process consistently distorts drone motion signals — evidenced by noise amplitude peaks in the spectra and significant deviations in yaw rate and accelerometer measurements. The distortion is most pronounced with large-amplitude sensor signals.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Recovered accelerometer measurements (HITL, G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered accelerometer measurements (HITL, G_i = 20.0 m/s²)"></a></p>
+<p><a href="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Recovered accelerometer measurements (HITL, G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered accelerometer measurements (HITL, G_i = 20.0 m/s²)"></a></p>
 <figcaption>Recovered accelerometer measurements (HITL, <span class="math inline">\(G_i = 20.0\)</span> m/s²)</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Noise amplitude spectra of accelerometer recovery (HITL, G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectra of accelerometer recovery (HITL, G_i = 20.0 m/s²)"></a></p>
+<p><a href="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Noise amplitude spectra of accelerometer recovery (HITL, G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectra of accelerometer recovery (HITL, G_i = 20.0 m/s²)"></a></p>
 <figcaption>Noise amplitude spectra of accelerometer recovery (HITL, <span class="math inline">\(G_i = 20.0\)</span> m/s²)</figcaption>
 </figure>
 </div>
-<p>In both real-world and simulated attacks, UnRocker’s recovery process consistently distorts drone motion signals — evidenced by noise amplitude peaks in the spectra and significant deviations in yaw rate and accelerometer measurements. The distortion is most pronounced with large-amplitude sensor signals.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../figures/COMPACT_wara_unrocker_wiener_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Noise amplitude spectrum: WARA vs UnRocker vs Wiener (G_i = 4.0 rad/s)"><img src="../figures/COMPACT_wara_unrocker_wiener_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectrum: WARA vs UnRocker vs Wiener (G_i = 4.0 rad/s)"></a></p>
-<figcaption>Noise amplitude spectrum: WARA vs UnRocker vs Wiener (<span class="math inline">\(G_i = 4.0\)</span> rad/s)</figcaption>
-</figure>
-</div>
-<p>UnRocker and the Wiener filter both introduce <strong>new noise peaks in the low-frequency band</strong> — distortions of the drone’s motion signal. WARA’s noise peak at lower frequencies, when present, has a considerably smaller amplitude.</p>
+<!-- ![Noise amplitude spectrum: WARA vs UnRocker vs Wiener ($G_i = 4.0$ rad/s)](../figures/COMPACT_wara_unrocker_wiener_fftplot.png){.lightbox width=95%}
+
+UnRocker and the Wiener filter both introduce **new noise peaks in the low-frequency band** — distortions of the drone's motion signal. WARA's noise peak at lower frequencies, when present, has a considerably smaller amplitude. -->
 </section>
 <section id="comparison-with-heuristic-filters" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-with-heuristic-filters">Comparison with Heuristic Filters</h2>
@@ -391,23 +378,23 @@ The Wiener filter effectively removes most induced signals, but its recovered me
 <p>The offline HITL results confirm the online findings. Butterworth and Savitzky-Golay cannot selectively filter out attack interference blended with motion signals. Wiener introduces low-frequency distortion — new peaks appear in the 0–5 Hz band after recovery. WARA isolates interference in the time-frequency domain, removing attack components while preserving motion signals intact.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Recovered gyroscope measurements — HITL (G_i = 4.0 rad/s)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered gyroscope measurements — HITL (G_i = 4.0 rad/s)"></a></p>
+<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Recovered gyroscope measurements — HITL (G_i = 4.0 rad/s)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered gyroscope measurements — HITL (G_i = 4.0 rad/s)"></a></p>
 <figcaption>Recovered gyroscope measurements — HITL (<span class="math inline">\(G_i = 4.0\)</span> rad/s)</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Noise amplitude spectra of gyroscope recovery — HITL (G_i = 4.0 rad/s)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectra of gyroscope recovery — HITL (G_i = 4.0 rad/s)"></a></p>
+<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Noise amplitude spectra of gyroscope recovery — HITL (G_i = 4.0 rad/s)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectra of gyroscope recovery — HITL (G_i = 4.0 rad/s)"></a></p>
 <figcaption>Noise amplitude spectra of gyroscope recovery — HITL (<span class="math inline">\(G_i = 4.0\)</span> rad/s)</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Recovered accelerometer measurements — HITL (G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered accelerometer measurements — HITL (G_i = 20.0 m/s²)"></a></p>
+<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Recovered accelerometer measurements — HITL (G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered accelerometer measurements — HITL (G_i = 20.0 m/s²)"></a></p>
 <figcaption>Recovered accelerometer measurements — HITL (<span class="math inline">\(G_i = 20.0\)</span> m/s²)</figcaption>
 </figure>
 </div>
-<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Noise amplitude spectra of accelerometer recovery — HITL (G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="img-fluid" style="width:95.0%" alt="Noise amplitude spectra of accelerometer recovery — HITL (G_i = 20.0 m/s²)"></a> <!-- 
+<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Noise amplitude spectra of accelerometer recovery — HITL (G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="img-fluid" style="width:95.0%" alt="Noise amplitude spectra of accelerometer recovery — HITL (G_i = 20.0 m/s²)"></a> <!-- 
 ## Comparison with VIMU
 
 **VIMU** [@wang2024vimu] is the SOTA physics-based attack resilience (PBAR) approach. It predicts system states using a nonlinear physical model and replaces compromised IMU data with these predictions. Unlike UnRocker, VIMU meets real-time constraints on our FC boards, enabling direct online HITL comparison.
