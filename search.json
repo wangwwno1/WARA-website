@@ -208,17 +208,6 @@
     ]
   },
   {
-    "objectID": "index.html#key-contributions",
-    "href": "index.html#key-contributions",
-    "title": "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-    "section": "Key Contributions",
-    "text": "Key Contributions\n\n\n🎯 Multi-IMU Attacks\nWe develop a low-cost ($28) attack device that simultaneously injects acoustic interference into multiple heterogeneous IMUs, bypassing physical shielding and IMU redundancy on commercial flight controllers.\n\n\n🔬 Wavelet Recovery\nWARA uses wavelet packet decomposition to isolate attack interference by amplitude. A redundant IMU instance preserves benign signal components — even if all IMUs are compromised.\n\n\n🚁 Real-World Flights\nImplemented on PX4 autopilot (CUAV V5+, Pixhawk 6C Mini). Real-world flight tests sustain stable flight for 2–5 minutes under acoustic attacks, far exceeding SOTA recovery durations.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Home"
-    ]
-  },
-  {
     "objectID": "index.html#featured-videos",
     "href": "index.html#featured-videos",
     "title": "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
@@ -245,84 +234,49 @@
     "href": "pages/advanced-attack.html",
     "title": "Advanced Attack Waveforms",
     "section": "",
-    "text": "In conventional acoustic attacks, the oscillating induced signal contributes roughly the same amount to inertial measurements in both directions, limiting the accumulated error. To develop more capable attacks, prior work has introduced two signal modulation techniques (Tu et al. 2018):\n\nSide-swing attack — The adversary increases the amplitude when the induced signal is in the target direction and decreases it otherwise, producing a net directional bias.\nSwitch attack — The attacker switches the acoustic frequency to keep the induced signal consistently in the same direction.\n\nBoth attacks induce low-frequency distortion in the target direction, allowing the adversary to not only disrupt sensor readings but also deliver implicit control and manipulate drone motion. These are substantially more dangerous than unmodulated acoustic injections.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Evaluation Results",
-      "Advanced Attack Waveforms"
-    ]
+    "text": "In conventional acoustic attacks, the oscillating induced signal contributes roughly the same amount to inertial measurements in both directions, limiting the accumulated error. To develop more capable attacks, prior work has introduced two signal modulation techniques (Tu et al. 2018):\n\nSide-swing attack — The adversary increases the amplitude when the induced signal is in the target direction and decreases it otherwise, producing a net directional bias.\nSwitch attack — The attacker switches the acoustic frequency to keep the induced signal consistently in the same direction.\n\nBoth attacks induce low-frequency distortion in the target direction, allowing the adversary to not only disrupt sensor readings but also deliver implicit control and manipulate drone motion. These are substantially more dangerous than unmodulated acoustic injections."
   },
   {
     "objectID": "pages/advanced-attack.html#side-swing-and-switch-attacks",
     "href": "pages/advanced-attack.html#side-swing-and-switch-attacks",
     "title": "Advanced Attack Waveforms",
     "section": "",
-    "text": "In conventional acoustic attacks, the oscillating induced signal contributes roughly the same amount to inertial measurements in both directions, limiting the accumulated error. To develop more capable attacks, prior work has introduced two signal modulation techniques (Tu et al. 2018):\n\nSide-swing attack — The adversary increases the amplitude when the induced signal is in the target direction and decreases it otherwise, producing a net directional bias.\nSwitch attack — The attacker switches the acoustic frequency to keep the induced signal consistently in the same direction.\n\nBoth attacks induce low-frequency distortion in the target direction, allowing the adversary to not only disrupt sensor readings but also deliver implicit control and manipulate drone motion. These are substantially more dangerous than unmodulated acoustic injections.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Evaluation Results",
-      "Advanced Attack Waveforms"
-    ]
+    "text": "In conventional acoustic attacks, the oscillating induced signal contributes roughly the same amount to inertial measurements in both directions, limiting the accumulated error. To develop more capable attacks, prior work has introduced two signal modulation techniques (Tu et al. 2018):\n\nSide-swing attack — The adversary increases the amplitude when the induced signal is in the target direction and decreases it otherwise, producing a net directional bias.\nSwitch attack — The attacker switches the acoustic frequency to keep the induced signal consistently in the same direction.\n\nBoth attacks induce low-frequency distortion in the target direction, allowing the adversary to not only disrupt sensor readings but also deliver implicit control and manipulate drone motion. These are substantially more dangerous than unmodulated acoustic injections."
   },
   {
     "objectID": "pages/advanced-attack.html#evaluation-setup",
     "href": "pages/advanced-attack.html#evaluation-setup",
     "title": "Advanced Attack Waveforms",
     "section": "Evaluation Setup",
-    "text": "Evaluation Setup\nWe evaluate WARA’s recovery performance against advanced attacks in SITL simulation. The primary IMU is targeted with either a side-swing or switch attack at an induced frequency \\(f_i = 1\\) Hz (Tu et al. 2018). The reserved IMUs are targeted with regular simulated attacks at \\(f_i = 20\\) Hz. All attacks use an amplitude of \\(G_i = 2.0\\) rad/s. WARA operates in multi-IMU mode to leverage the redundant IMUs for low-frequency interference removal.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Evaluation Results",
-      "Advanced Attack Waveforms"
-    ]
+    "text": "Evaluation Setup\nWe evaluate WARA’s recovery performance against advanced attacks in SITL simulation. The primary IMU is targeted with either a side-swing or switch attack at an induced frequency \\(f_i = 1\\) Hz (Tu et al. 2018). The reserved IMUs are targeted with regular simulated attacks at \\(f_i = 20\\) Hz. All attacks use an amplitude of \\(G_i = 2.0\\) rad/s. WARA operates in multi-IMU mode to leverage the redundant IMUs for low-frequency interference removal."
   },
   {
     "objectID": "pages/advanced-attack.html#wara-recovery-results",
     "href": "pages/advanced-attack.html#wara-recovery-results",
     "title": "Advanced Attack Waveforms",
     "section": "WARA Recovery Results",
-    "text": "WARA Recovery Results\nThe advanced attacks inject strong low-frequency interference into the primary IMU measurements, causing significant deviations from the ground truth. WARA’s multi-IMU mode identifies the affected LF wavelet packets and replaces them with benign coefficients from a redundant — but also compromised — IMU instance.\n\n\n\n\nRecovered gyroscope measurements (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\n\n\nNoise amplitude spectra (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\nThe recovered measurements show substantially reduced interference in the attacked frequency bands, enabling the drone to maintain stability and complete its mission.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Evaluation Results",
-      "Advanced Attack Waveforms"
-    ]
+    "text": "WARA Recovery Results\nThe advanced attacks inject strong low-frequency interference into the primary IMU measurements, causing significant deviations from the ground truth. WARA’s multi-IMU mode identifies the affected LF wavelet packets and replaces them with benign coefficients from a redundant — but also compromised — IMU instance.\n\n\n\n\nRecovered gyroscope measurements (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\n\n\nNoise amplitude spectra (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\nThe recovered measurements show substantially reduced interference in the attacked frequency bands, enabling the drone to maintain stability and complete its mission."
   },
   {
     "objectID": "pages/advanced-attack.html#comparison-with-unrocker-and-single-imu-wara",
     "href": "pages/advanced-attack.html#comparison-with-unrocker-and-single-imu-wara",
     "title": "Advanced Attack Waveforms",
     "section": "Comparison with UnRocker and Single-IMU WARA",
-    "text": "Comparison with UnRocker and Single-IMU WARA\nIn contrast, both UnRocker and WARA’s single-IMU mode are ineffective against these advanced attacks:\n\n\n\n\nRecovered gyroscope measurements: WARA vs UnRocker vs Single-IMU WARA (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\n\n\nNoise amplitude spectra comparison (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\nTheir recovered results deviate significantly from the ground truth, and the noise peaks in the 0–5 Hz band confirm that LF interference persists after their recovery processes. These results demonstrate that WARA’s multi-IMU mode is essential for removing low-frequency attack interference — single-IMU recovery and deep-learning denoising both fail when the attack energy is concentrated within the motion signal band.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Evaluation Results",
-      "Advanced Attack Waveforms"
-    ]
+    "text": "Comparison with UnRocker and Single-IMU WARA\nIn contrast, both UnRocker and WARA’s single-IMU mode are ineffective against these advanced attacks:\n\n\n\n\nRecovered gyroscope measurements: WARA vs UnRocker vs Single-IMU WARA (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\n\n\nNoise amplitude spectra comparison (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\nTheir recovered results deviate significantly from the ground truth, and the noise peaks in the 0–5 Hz band confirm that LF interference persists after their recovery processes. These results demonstrate that WARA’s multi-IMU mode is essential for removing low-frequency attack interference — single-IMU recovery and deep-learning denoising both fail when the attack energy is concentrated within the motion signal band."
   },
   {
     "objectID": "pages/advanced-attack.html#limitations",
     "href": "pages/advanced-attack.html#limitations",
     "title": "Advanced Attack Waveforms",
     "section": "Limitations",
-    "text": "Limitations\nWe investigated WARA’s boundaries by varying attack configurations. Increasing \\(G_i\\) on the primary IMU above 2.0 rad/s destabilizes the flight attitude, triggering a no position fail-safe due to a false alarm in the GNSS sensor. Simultaneously attacking all IMUs with side-swing or switch attacks results in a crash — these attacks all produce LF interference, creating overlapping distortion within the narrow motion signal band (0–5 Hz). However, simultaneously crafting multiple independent modulated signals into this band remains challenging, as discussed in the paper.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Evaluation Results",
-      "Advanced Attack Waveforms"
-    ]
+    "text": "Limitations\nWe investigated WARA’s boundaries by varying attack configurations. Increasing \\(G_i\\) on the primary IMU above 2.0 rad/s destabilizes the flight attitude, triggering a no position fail-safe due to a false alarm in the GNSS sensor. Simultaneously attacking all IMUs with side-swing or switch attacks results in a crash — these attacks all produce LF interference, creating overlapping distortion within the narrow motion signal band (0–5 Hz). However, simultaneously crafting multiple independent modulated signals into this band remains challenging, as discussed in the paper."
   },
   {
     "objectID": "pages/advanced-attack.html#impact-on-closed-loop-control",
     "href": "pages/advanced-attack.html#impact-on-closed-loop-control",
     "title": "Advanced Attack Waveforms",
     "section": "Impact on Closed-Loop Control",
-    "text": "Impact on Closed-Loop Control\nTo directly quantify recovery quality at the control level, we measure the mean attitude error across roll, pitch, and yaw axes. We conducted 10 SITL flights per configuration. The attitude error is the absolute deviation between the estimated Euler angles and the ground-truth states.\n\n\n\nMean attitude error under Switch Attack (\\(G_i = 2.0\\) rad/s)\n\n\nUnder attack-free conditions, WARA maintains a performance profile nearly identical to the vanilla PX4 autopilot, with errors consistently below 0.02 rad — confirming WARA introduces no functional degradation during routine operations.\nUnder the Switch Attack, the vanilla autopilot’s attitude error surges to 0.5–1.0 rad, a magnitude that triggers an immediate crash. In contrast, WARA suppresses the error to 0.05–0.10 rad across all axes. Although this remains higher than the benign state, it stays well within the autopilot’s compensation envelope — the drone maintains flight attitude and completes its mission.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Evaluation Results",
-      "Advanced Attack Waveforms"
-    ]
+    "text": "Impact on Closed-Loop Control\nTo directly quantify recovery quality at the control level, we measure the mean attitude error across roll, pitch, and yaw axes. We conducted 10 SITL flights per configuration. The attitude error is the absolute deviation between the estimated Euler angles and the ground-truth states.\n\n\n\nMean attitude error under Switch Attack (\\(G_i = 2.0\\) rad/s)\n\n\nUnder attack-free conditions, WARA maintains a performance profile nearly identical to the vanilla PX4 autopilot, with errors consistently below 0.02 rad — confirming WARA introduces no functional degradation during routine operations.\nUnder the Switch Attack, the vanilla autopilot’s attitude error surges to 0.5–1.0 rad, a magnitude that triggers an immediate crash. In contrast, WARA suppresses the error to 0.05–0.10 rad across all axes. Although this remains higher than the benign state, it stays well within the autopilot’s compensation envelope — the drone maintains flight attitude and completes its mission."
   },
   {
     "objectID": "pages/detector-parameters.html",
@@ -389,31 +343,7 @@
     "href": "pages/recovery-effectiveness.html",
     "title": "Recovery Effectiveness",
     "section": "",
-    "text": "To compare all approaches on a common metric, we use effective recovery duration (Choi et al. 2020): the elapsed time from the first detection alarm (\\(t_{alarm}\\)) until the drone’s estimated position deviates from the actual position by more than \\(\\epsilon = 3\\) meters — indicating loss of stable flight. This metric reflects sustained operational safety under attack, not merely signal-level recovery quality. All results below are measured in HITL simulation on the same hardware for fair comparison.\n\n\n\nEffective recovery duration across all baselines (HITL, \\(G_i\\) and \\(f_i\\) as labeled)\n\n\nWARA achieves the longest effective recovery durations across all tested attack configurations. UnRocker’s high processing delay prevents timely recovery even when its signal-level denoising is effective. VIMU’s physical model degrades under strong attacks and sampling jitter. SpecGuard’s RL controller cannot compensate when all IMU instances are simultaneously compromised. The classical filters — Butterworth, Savitzky-Golay, and Wiener — either fail to remove low-frequency interference or introduce motion signal distortion that shortens recovery duration. The following sections examine each comparison in detail.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Evaluation Results",
-      "Recovery Effectiveness"
-    ]
-  },
-  {
-    "objectID": "pages/recovery-effectiveness.html#effective-recovery-duration",
-    "href": "pages/recovery-effectiveness.html#effective-recovery-duration",
-    "title": "Recovery Effectiveness",
-    "section": "",
-    "text": "To compare all approaches on a common metric, we use effective recovery duration (Choi et al. 2020): the elapsed time from the first detection alarm (\\(t_{alarm}\\)) until the drone’s estimated position deviates from the actual position by more than \\(\\epsilon = 3\\) meters — indicating loss of stable flight. This metric reflects sustained operational safety under attack, not merely signal-level recovery quality. All results below are measured in HITL simulation on the same hardware for fair comparison.\n\n\n\nEffective recovery duration across all baselines (HITL, \\(G_i\\) and \\(f_i\\) as labeled)\n\n\nWARA achieves the longest effective recovery durations across all tested attack configurations. UnRocker’s high processing delay prevents timely recovery even when its signal-level denoising is effective. VIMU’s physical model degrades under strong attacks and sampling jitter. SpecGuard’s RL controller cannot compensate when all IMU instances are simultaneously compromised. The classical filters — Butterworth, Savitzky-Golay, and Wiener — either fail to remove low-frequency interference or introduce motion signal distortion that shortens recovery duration. The following sections examine each comparison in detail.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Evaluation Results",
-      "Recovery Effectiveness"
-    ]
-  },
-  {
-    "objectID": "pages/recovery-effectiveness.html#comparison-with-unrocker",
-    "href": "pages/recovery-effectiveness.html#comparison-with-unrocker",
-    "title": "Recovery Effectiveness",
-    "section": "Comparison with UnRocker",
-    "text": "Comparison with UnRocker\nUnRocker (Jeong et al. 2023) is the SOTA deep-learning-based denoising approach that uses an autoencoder to remove attack interference from a sliding window of IMU measurements. Both methods run on a Raspberry Pi 3B+, the only board in our test suite with sufficient memory (1 GB) to load UnRocker’s autoencoder model (1.43 MB). Since UnRocker lacks an attack detection mechanism, we activate both recovery processes immediately after the attack to eliminate detection delay as a confounding factor.\n\nThe Process Delay Problem\nUnRocker takes 35 to 56 ms to process each IMU sample. This far exceeds the HITL sampling interval (\\(\\Delta{t} = 4\\) ms). Even without any acoustic attack, such a lengthy processing delay forces the drone into oscillation and eventually triggers a crash (Jeong et al. 2023). To verify, we set the attack amplitude to zero (\\(G_i = 0\\)) and run UnRocker’s recovery — the drone still loses control quickly.\n\n\n\nImpact of computational delay on online gyroscope recovery\n\n\n\n\nUnRocker: Attack → Crash\n\n\n\nUnRocker: No Attack → Delay-Induced Crash\n\n\n\nWARA: Recovery &gt;300 s\n\n\n\nWhen an acoustic attack is active (\\(G_i = 1.0\\) rad/s, \\(f_i = 20\\) Hz), UnRocker’s recovered measurements quickly deviate from the actual state, resulting in an immediate crash. In contrast, WARA’s recovered measurements stay consistent with the actual state, achieving effective recovery durations exceeding 300 seconds.\n\n\nOffline: Remote Gyroscope Attacks\nTo thoroughly compare recovery quality without the confounding effect of processing delay, we conduct an offline evaluation. Both methods are applied to the same compromised sensor data and compared against the ground truth.\n\n\n\n\nRecovered gyroscope measurements (\\(G_i = 2.0\\) rad/s)\n\n\n\n\n\nNoise amplitude spectra (\\(G_i = 2.0\\) rad/s)\n\n\n\nBoth methods effectively suppress the acoustic injection attacks — reduced sensor fluctuations and diminished attack signal peaks confirm this. However, UnRocker’s recovered measurements deviate from the drone’s actual state. When the actual pitch rate exceeds 1.0 rad/s, UnRocker returns near-zero output — the deep model distorts benign motion signals during recovery. The noise amplitude spectrum reveals new peaks in the 0–5 Hz band absent before recovery, confirming UnRocker introduces low-frequency signal distortion.\nWARA’s orthogonal wavelet packet transform preserves drone motion signals while efficiently removing induced signals. Because orthogonal WPD is an invertible linear transformation, it preserves the energy and details of the input — benign signal components pass through recovery intact.\n\n\nOffline: Touch-Based Real-World Attack\nWe further compare recovery against touch-based acoustic attacks on the ICM-42688P gyroscope sensor, where PZT discs are attached directly to the flight controller for stronger attack amplitudes.\n\n\n\nRecovered gyroscope measurements (touch-based, \\(G_i = 1.9\\) rad/s)\n\n\n\n\n\nNoise amplitude spectra of gyroscope recovery (touch-based, \\(G_i = 1.9\\) rad/s)\n\n\n\n\nHITL: Accelerometer Attack\n\n\n\nRecovered accelerometer measurements (HITL, \\(G_i = 20.0\\) m/s²)\n\n\n\n\n\nNoise amplitude spectra of accelerometer recovery (HITL, \\(G_i = 20.0\\) m/s²)\n\n\nIn both real-world and simulated attacks, UnRocker’s recovery process consistently distorts drone motion signals — evidenced by noise amplitude peaks in the spectra and significant deviations in yaw rate and accelerometer measurements. The distortion is most pronounced with large-amplitude sensor signals.\n\n\n\nNoise amplitude spectrum: WARA vs UnRocker vs Wiener (\\(G_i = 4.0\\) rad/s)\n\n\nUnRocker and the Wiener filter both introduce new noise peaks in the low-frequency band — distortions of the drone’s motion signal. WARA’s noise peak at lower frequencies, when present, has a considerably smaller amplitude.",
+    "text": "We further compare recovery against touch-based acoustic attacks on the ICM-42688P gyroscope sensor, where PZT discs are attached directly to the flight controller for stronger attack amplitudes.\n\n\n\nRecovered gyroscope measurements (touch-based, \\(G_i = 1.9\\) rad/s)\n\n\n\n\n\nNoise amplitude spectra of gyroscope recovery (touch-based, \\(G_i = 1.9\\) rad/s)",
     "crumbs": [
       "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
       "Evaluation Results",
@@ -425,31 +355,7 @@
     "href": "pages/recovery-effectiveness.html#comparison-with-heuristic-filters",
     "title": "Recovery Effectiveness",
     "section": "Comparison with Heuristic Filters",
-    "text": "Comparison with Heuristic Filters\nWe compare WARA against three classical signal processing methods: Butterworth (Alexander and Williams 2016) (2nd-order, 40 Hz cutoff, the PX4 default), Savitzky-Golay (Schafer 2011) (polynomial order 6, window length 16, equivalent 40 Hz cutoff), and Wiener (Roux and Vincent 2013) (window length 255).\n\nOnline SITL\nBoth Butterworth and Savitzky-Golay fail to remove the induced signal when the induced frequency falls below their 40 Hz cutoff. Reducing the cutoff further would capture low-frequency interference, but at the cost of increased control latency (“MC Filter Tuning & Control Latency,” n.d.) — directly compromising flight performance.\nThe Wiener filter effectively removes most induced signals, but its recovered measurements exhibit slower fluctuations and its noise spectrum reveals new peaks in the low-frequency band, causing the flight controller to overreact to attitude adjustments.\n\n\n\nRecovered gyroscope data — SITL (\\(G_i = 4.0\\) rad/s, \\(f_i = 20\\) Hz)\n\n\n\n\nHITL Results\nThe offline HITL results confirm the online findings. Butterworth and Savitzky-Golay cannot selectively filter out attack interference blended with motion signals. Wiener introduces low-frequency distortion — new peaks appear in the 0–5 Hz band after recovery. WARA isolates interference in the time-frequency domain, removing attack components while preserving motion signals intact.\n\n\n\nRecovered gyroscope measurements — HITL (\\(G_i = 4.0\\) rad/s)\n\n\n\n\n\nNoise amplitude spectra of gyroscope recovery — HITL (\\(G_i = 4.0\\) rad/s)\n\n\n\n\n\nRecovered accelerometer measurements — HITL (\\(G_i = 20.0\\) m/s²)\n\n\n\n\n\nNoise amplitude spectra of accelerometer recovery — HITL (\\(G_i = 20.0\\) m/s²)",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Evaluation Results",
-      "Recovery Effectiveness"
-    ]
-  },
-  {
-    "objectID": "pages/recovery-effectiveness.html#comparison-with-vimu",
-    "href": "pages/recovery-effectiveness.html#comparison-with-vimu",
-    "title": "Recovery Effectiveness",
-    "section": "Comparison with VIMU",
-    "text": "Comparison with VIMU\nVIMU (Wang et al. 2024) is the SOTA physics-based attack resilience (PBAR) approach. It predicts system states using a nonlinear physical model and replaces compromised IMU data with these predictions. Unlike UnRocker, VIMU meets real-time constraints on our FC boards, enabling direct online HITL comparison.\n\n\n\nFlight attitude in gyroscope recovery (HITL, \\(G_i = 4.0\\) rad/s)\n\n\n\n\nVIMU: HITL → Crash\n\n\n\nWARA: CUAV V5+ HITL Recovery\n\n\n\nThe drone equipped with VIMU quickly lost control and crashed shortly after the attack began. VIMU’s recovery duration in HITL is shorter than simulation results reported in prior work (Wang et al. 2024) because we apply a significantly larger attack amplitude (4.0 vs. 0.6 rad/s). Additionally, sampling jitter affects VIMU’s physical model — the model predicts attitude changes per system control interval, but jitter disrupts the timing relationship between sensor samples and control updates.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Evaluation Results",
-      "Recovery Effectiveness"
-    ]
-  },
-  {
-    "objectID": "pages/recovery-effectiveness.html#comparison-with-specguard",
-    "href": "pages/recovery-effectiveness.html#comparison-with-specguard",
-    "title": "Recovery Effectiveness",
-    "section": "Comparison with SpecGuard",
-    "text": "Comparison with SpecGuard\nSpecGuard (Dash et al. 2024) is the SOTA fault-tolerant control (FTC) approach. Unlike filter-based and PBAR solutions, SpecGuard does not directly recover compromised measurements. Instead, it employs a deep-RL robust controller that activates upon attack detection, aiming to keep the drone within predefined mission specifications (e.g., minimum flight altitude, position boundary). We deployed SpecGuard on Navio2@Raspberry Pi 3B+ for HITL simulation.\n\n\n\nFlight altitude in gyroscope recovery (SpecGuard, HITL)\n\n\nAfter the attack began, the drone quickly violated the minimum altitude specification and veered off the 10 m position boundary (Dash et al. 2024), resulting in a short recovery duration (&lt; 10 seconds). SpecGuard’s performance degrades relative to reported simulation results (Dash et al. 2024) because we apply the IMU attack to all gyroscope instances simultaneously — without reliable IMU measurements, the autopilot’s state estimation is disrupted, defeating the RL controller’s ability to maintain specifications.",
+    "text": "Comparison with Heuristic Filters\nWe compare WARA against three classical signal processing methods: Butterworth (Alexander and Williams 2016) (2nd-order, 40 Hz cutoff, the PX4 default), Savitzky-Golay (Schafer 2011) (polynomial order 6, window length 16, equivalent 40 Hz cutoff), and Wiener (Roux and Vincent 2013) (window length 255).  ### HITL Results\nThe offline HITL results confirm the online findings. Butterworth and Savitzky-Golay cannot selectively filter out attack interference blended with motion signals. Wiener introduces low-frequency distortion — new peaks appear in the 0–5 Hz band after recovery. WARA isolates interference in the time-frequency domain, removing attack components while preserving motion signals intact.\n\n\n\nRecovered gyroscope measurements — HITL (\\(G_i = 4.0\\) rad/s)\n\n\n\n\n\nNoise amplitude spectra of gyroscope recovery — HITL (\\(G_i = 4.0\\) rad/s)\n\n\n\n\n\nRecovered accelerometer measurements — HITL (\\(G_i = 20.0\\) m/s²)",
     "crumbs": [
       "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
       "Evaluation Results",

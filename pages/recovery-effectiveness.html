@@ -52,7 +52,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../pages/advanced-attack.html" rel="next">
+<link href="../pages/external-disturbance.html" rel="next">
 <link href="../pages/detector-parameters.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -235,12 +235,6 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../pages/advanced-attack.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Advanced Attack Waveforms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../pages/external-disturbance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Impact of External Disturbance</span></a>
   </div>
@@ -253,21 +247,9 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#effective-recovery-duration" id="toc-effective-recovery-duration" class="nav-link active" data-scroll-target="#effective-recovery-duration">Effective Recovery Duration</a></li>
-  <li><a href="#comparison-with-unrocker" id="toc-comparison-with-unrocker" class="nav-link" data-scroll-target="#comparison-with-unrocker">Comparison with UnRocker</a>
-  <ul class="collapse">
-  <li><a href="#the-process-delay-problem" id="toc-the-process-delay-problem" class="nav-link" data-scroll-target="#the-process-delay-problem">The Process Delay Problem</a></li>
-  <li><a href="#offline-remote-gyroscope-attacks" id="toc-offline-remote-gyroscope-attacks" class="nav-link" data-scroll-target="#offline-remote-gyroscope-attacks">Offline: Remote Gyroscope Attacks</a></li>
-  <li><a href="#offline-touch-based-real-world-attack" id="toc-offline-touch-based-real-world-attack" class="nav-link" data-scroll-target="#offline-touch-based-real-world-attack">Offline: Touch-Based Real-World Attack</a></li>
+  <li><a href="#offline-touch-based-real-world-attack" id="toc-offline-touch-based-real-world-attack" class="nav-link active" data-scroll-target="#offline-touch-based-real-world-attack">Offline: Touch-Based Real-World Attack</a></li>
   <li><a href="#hitl-accelerometer-attack" id="toc-hitl-accelerometer-attack" class="nav-link" data-scroll-target="#hitl-accelerometer-attack">HITL: Accelerometer Attack</a></li>
-  </ul></li>
-  <li><a href="#comparison-with-heuristic-filters" id="toc-comparison-with-heuristic-filters" class="nav-link" data-scroll-target="#comparison-with-heuristic-filters">Comparison with Heuristic Filters</a>
-  <ul class="collapse">
-  <li><a href="#online-sitl" id="toc-online-sitl" class="nav-link" data-scroll-target="#online-sitl">Online SITL</a></li>
-  <li><a href="#hitl-results" id="toc-hitl-results" class="nav-link" data-scroll-target="#hitl-results">HITL Results</a></li>
-  </ul></li>
-  <li><a href="#comparison-with-vimu" id="toc-comparison-with-vimu" class="nav-link" data-scroll-target="#comparison-with-vimu">Comparison with VIMU</a></li>
-  <li><a href="#comparison-with-specguard" id="toc-comparison-with-specguard" class="nav-link" data-scroll-target="#comparison-with-specguard">Comparison with SpecGuard</a></li>
+  <li><a href="#comparison-with-heuristic-filters" id="toc-comparison-with-heuristic-filters" class="nav-link" data-scroll-target="#comparison-with-heuristic-filters">Comparison with Heuristic Filters</a></li>
   </ul>
 </nav>
 </nav>
@@ -297,77 +279,77 @@ window.Quarto = {
 </header>
 
 
-<section id="effective-recovery-duration" class="level2">
-<h2 class="anchored" data-anchor-id="effective-recovery-duration">Effective Recovery Duration</h2>
-<p>To compare all approaches on a common metric, we use <strong>effective recovery duration</strong> <span class="citation" data-cites="choi2020software">(<a href="#ref-choi2020software" role="doc-biblioref">Choi et al. 2020</a>)</span>: the elapsed time from the first detection alarm (<span class="math inline">\(t_{alarm}\)</span>) until the drone’s estimated position deviates from the actual position by more than <span class="math inline">\(\epsilon = 3\)</span> meters — indicating loss of stable flight. This metric reflects <em>sustained operational safety under attack</em>, not merely signal-level recovery quality. All results below are measured in <strong>HITL simulation</strong> on the same hardware for fair comparison.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../figures/Fig.XX Effective Recovery Duration.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Effective recovery duration across all baselines (HITL, G_i and f_i as labeled)"><img src="../figures/Fig.XX Effective Recovery Duration.png" class="img-fluid figure-img" style="width:95.0%" alt="Effective recovery duration across all baselines (HITL, G_i and f_i as labeled)"></a></p>
-<figcaption>Effective recovery duration across all baselines (HITL, <span class="math inline">\(G_i\)</span> and <span class="math inline">\(f_i\)</span> as labeled)</figcaption>
-</figure>
-</div>
-<p>WARA achieves the <strong>longest effective recovery durations</strong> across all tested attack configurations. UnRocker’s high processing delay prevents timely recovery even when its signal-level denoising is effective. VIMU’s physical model degrades under strong attacks and sampling jitter. SpecGuard’s RL controller cannot compensate when all IMU instances are simultaneously compromised. The classical filters — Butterworth, Savitzky-Golay, and Wiener — either fail to remove low-frequency interference or introduce motion signal distortion that shortens recovery duration. The following sections examine each comparison in detail.</p>
-</section>
-<section id="comparison-with-unrocker" class="level2">
-<h2 class="anchored" data-anchor-id="comparison-with-unrocker">Comparison with UnRocker</h2>
-<p><strong>UnRocker</strong> <span class="citation" data-cites="jeong2023rocking">(<a href="#ref-jeong2023rocking" role="doc-biblioref">Jeong et al. 2023</a>)</span> is the SOTA deep-learning-based denoising approach that uses an autoencoder to remove attack interference from a sliding window of IMU measurements. Both methods run on a Raspberry Pi 3B+, the only board in our test suite with sufficient memory (1 GB) to load UnRocker’s autoencoder model (1.43 MB). Since UnRocker lacks an attack detection mechanism, we activate both recovery processes immediately after the attack to eliminate detection delay as a confounding factor.</p>
-<section id="the-process-delay-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-process-delay-problem">The Process Delay Problem</h3>
-<p>UnRocker takes <strong>35 to 56 ms</strong> to process each IMU sample. This far exceeds the HITL sampling interval (<span class="math inline">\(\Delta{t} = 4\)</span> ms). Even without any acoustic attack, such a lengthy processing delay forces the drone into oscillation and eventually triggers a crash <span class="citation" data-cites="jeong2023rocking">(<a href="#ref-jeong2023rocking" role="doc-biblioref">Jeong et al. 2023</a>)</span>. To verify, we set the attack amplitude to zero (<span class="math inline">\(G_i = 0\)</span>) and run UnRocker’s recovery — the drone still loses control quickly.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../figures/Online Recovery Comparison - Unrocker.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Impact of computational delay on online gyroscope recovery"><img src="../figures/Online Recovery Comparison - Unrocker.png" class="img-fluid figure-img" style="width:95.0%" alt="Impact of computational delay on online gyroscope recovery"></a></p>
-<figcaption>Impact of computational delay on online gyroscope recovery</figcaption>
-</figure>
-</div>
-<div class="video-grid-3">
-<div class="video-card">
-<p><strong>UnRocker: Attack → Crash</strong></p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/EtRTMFoqkLA" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-</div>
-<div class="video-card">
-<p><strong>UnRocker: No Attack → Delay-Induced Crash</strong></p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/w9hsJEjAnTY" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-</div>
-<div class="video-card">
-<p><strong>WARA: Recovery &gt;300 s</strong></p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/CIe-UB87nRo" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-</div>
-</div>
-<p>When an acoustic attack is active (<span class="math inline">\(G_i = 1.0\)</span> rad/s, <span class="math inline">\(f_i = 20\)</span> Hz), UnRocker’s recovered measurements quickly deviate from the actual state, resulting in an immediate crash. In contrast, WARA’s recovered measurements stay consistent with the actual state, achieving effective recovery durations exceeding <strong>300 seconds</strong>.</p>
-</section>
-<section id="offline-remote-gyroscope-attacks" class="level3">
-<h3 class="anchored" data-anchor-id="offline-remote-gyroscope-attacks">Offline: Remote Gyroscope Attacks</h3>
-<p>To thoroughly compare recovery <em>quality</em> without the confounding effect of processing delay, we conduct an <strong>offline evaluation</strong>. Both methods are applied to the same compromised sensor data and compared against the ground truth.</p>
-<div class="fig-grid-2">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../figures/Fig.XX Recovered gyroscope measurements (Remote real-world attack).png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Recovered gyroscope measurements (G_i = 2.0 rad/s)"><img src="../figures/Fig.XX Recovered gyroscope measurements (Remote real-world attack).png" class="img-fluid figure-img" alt="Recovered gyroscope measurements (G_i = 2.0 rad/s)"></a></p>
-<figcaption>Recovered gyroscope measurements (<span class="math inline">\(G_i = 2.0\)</span> rad/s)</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../figures/Fig.XX Noise amplitude spectrum (Remote real-world attack).png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Noise amplitude spectra (G_i = 2.0 rad/s)"><img src="../figures/Fig.XX Noise amplitude spectrum (Remote real-world attack).png" class="img-fluid figure-img" alt="Noise amplitude spectra (G_i = 2.0 rad/s)"></a></p>
-<figcaption>Noise amplitude spectra (<span class="math inline">\(G_i = 2.0\)</span> rad/s)</figcaption>
-</figure>
-</div>
-</div>
-<p>Both methods effectively suppress the acoustic injection attacks — reduced sensor fluctuations and diminished attack signal peaks confirm this. However, UnRocker’s recovered measurements <strong>deviate from the drone’s actual state</strong>. When the actual pitch rate exceeds 1.0 rad/s, UnRocker returns near-zero output — the deep model distorts benign motion signals during recovery. The noise amplitude spectrum reveals new peaks in the 0–5 Hz band absent before recovery, confirming UnRocker introduces low-frequency signal distortion.</p>
-<p>WARA’s <strong>orthogonal wavelet packet transform</strong> preserves drone motion signals while efficiently removing induced signals. Because orthogonal WPD is an invertible linear transformation, it preserves the energy and details of the input — benign signal components pass through recovery intact.</p>
-</section>
+<!-- 
+## Effective Recovery Duration
+
+To compare all approaches on a common metric, we use **effective recovery duration** [@choi2020software]: the elapsed time from the first detection alarm ($t_{alarm}$) until the drone's estimated position deviates from the actual position by more than $\epsilon = 3$ meters — indicating loss of stable flight. This metric reflects *sustained operational safety under attack*, not merely signal-level recovery quality. All results below are measured in **HITL simulation** on the same hardware for fair comparison.
+
+![Effective recovery duration across all baselines (HITL, $G_i$ and $f_i$ as labeled)](../figures/Fig.XX%20Effective%20Recovery%20Duration.png){.lightbox width=95%}
+
+WARA achieves the **longest effective recovery durations** across all tested attack configurations. UnRocker's high processing delay prevents timely recovery even when its signal-level denoising is effective. VIMU's physical model degrades under strong attacks and sampling jitter. SpecGuard's RL controller cannot compensate when all IMU instances are simultaneously compromised. The classical filters — Butterworth, Savitzky-Golay, and Wiener — either fail to remove low-frequency interference or introduce motion signal distortion that shortens recovery duration. The following sections examine each comparison in detail.
+
+## Comparison with UnRocker
+
+**UnRocker** [@jeong2023rocking] is the SOTA deep-learning-based denoising approach that uses an autoencoder to remove attack interference from a sliding window of IMU measurements. Both methods run on a Raspberry Pi 3B+, the only board in our test suite with sufficient memory (1 GB) to load UnRocker's autoencoder model (1.43 MB). Since UnRocker lacks an attack detection mechanism, we activate both recovery processes immediately after the attack to eliminate detection delay as a confounding factor.
+
+### The Process Delay Problem
+
+UnRocker takes **35 to 56 ms** to process each IMU sample. This far exceeds the HITL sampling interval ($\Delta{t} = 4$ ms). Even without any acoustic attack, such a lengthy processing delay forces the drone into oscillation and eventually triggers a crash [@jeong2023rocking]. To verify, we set the attack amplitude to zero ($G_i = 0$) and run UnRocker's recovery — the drone still loses control quickly.
+
+![Impact of computational delay on online gyroscope recovery](../figures/Online%20Recovery%20Comparison%20-%20Unrocker.png){.lightbox width=95%}
+
+::: {.video-grid-3}
+
+::: {.video-card}
+**UnRocker: Attack → Crash**
+
+
+:::
+
+::: {.video-card}
+**UnRocker: No Attack → Delay-Induced Crash**
+
+
+:::
+
+::: {.video-card}
+**WARA: Recovery >300 s**
+
+
+:::
+
+:::
+
+When an acoustic attack is active ($G_i = 1.0$ rad/s, $f_i = 20$ Hz), UnRocker's recovered measurements quickly deviate from the actual state, resulting in an immediate crash. In contrast, WARA's recovered measurements stay consistent with the actual state, achieving effective recovery durations exceeding **300 seconds**.
+
+### Offline: Remote Gyroscope Attacks
+
+To thoroughly compare recovery *quality* without the confounding effect of processing delay, we conduct an **offline evaluation**. Both methods are applied to the same compromised sensor data and compared against the ground truth.
+
+::: {.fig-grid-2}
+
+![Recovered gyroscope measurements ($G_i = 2.0$ rad/s)](../figures/Fig.XX%20Recovered%20gyroscope%20measurements%20(Remote%20real-world%20attack).png){.lightbox}
+
+![Noise amplitude spectra ($G_i = 2.0$ rad/s)](../figures/Fig.XX%20Noise%20amplitude%20spectrum%20(Remote%20real-world%20attack).png){.lightbox}
+
+:::
+
+Both methods effectively suppress the acoustic injection attacks — reduced sensor fluctuations and diminished attack signal peaks confirm this. However, UnRocker's recovered measurements **deviate from the drone's actual state**. When the actual pitch rate exceeds 1.0 rad/s, UnRocker returns near-zero output — the deep model distorts benign motion signals during recovery. The noise amplitude spectrum reveals new peaks in the 0–5 Hz band absent before recovery, confirming UnRocker introduces low-frequency signal distortion.
+
+WARA's **orthogonal wavelet packet transform** preserves drone motion signals while efficiently removing induced signals. Because orthogonal WPD is an invertible linear transformation, it preserves the energy and details of the input — benign signal components pass through recovery intact. 
+-->
 <section id="offline-touch-based-real-world-attack" class="level3">
 <h3 class="anchored" data-anchor-id="offline-touch-based-real-world-attack">Offline: Touch-Based Real-World Attack</h3>
 <p>We further compare recovery against <strong>touch-based acoustic attacks</strong> on the ICM-42688P gyroscope sensor, where PZT discs are attached directly to the flight controller for stronger attack amplitudes.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="../figures/RealWorld Offline - UnRocker/OfflineEval_RealAttack_sensor_gyro_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Recovered gyroscope measurements (touch-based, G_i = 1.9 rad/s)"><img src="../figures/RealWorld Offline - UnRocker/OfflineEval_RealAttack_sensor_gyro_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered gyroscope measurements (touch-based, G_i = 1.9 rad/s)"></a></p>
+<p><a href="../figures/RealWorld Offline - UnRocker/OfflineEval_RealAttack_sensor_gyro_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Recovered gyroscope measurements (touch-based, G_i = 1.9 rad/s)"><img src="../figures/RealWorld Offline - UnRocker/OfflineEval_RealAttack_sensor_gyro_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered gyroscope measurements (touch-based, G_i = 1.9 rad/s)"></a></p>
 <figcaption>Recovered gyroscope measurements (touch-based, <span class="math inline">\(G_i = 1.9\)</span> rad/s)</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="../figures/RealWorld Offline - UnRocker/OfflineEval_RealAttack_sensor_gyro_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Noise amplitude spectra of gyroscope recovery (touch-based, G_i = 1.9 rad/s)"><img src="../figures/RealWorld Offline - UnRocker/OfflineEval_RealAttack_sensor_gyro_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectra of gyroscope recovery (touch-based, G_i = 1.9 rad/s)"></a></p>
+<p><a href="../figures/RealWorld Offline - UnRocker/OfflineEval_RealAttack_sensor_gyro_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Noise amplitude spectra of gyroscope recovery (touch-based, G_i = 1.9 rad/s)"><img src="../figures/RealWorld Offline - UnRocker/OfflineEval_RealAttack_sensor_gyro_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectra of gyroscope recovery (touch-based, G_i = 1.9 rad/s)"></a></p>
 <figcaption>Noise amplitude spectra of gyroscope recovery (touch-based, <span class="math inline">\(G_i = 1.9\)</span> rad/s)</figcaption>
 </figure>
 </div>
@@ -376,100 +358,88 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="hitl-accelerometer-attack">HITL: Accelerometer Attack</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Recovered accelerometer measurements (HITL, G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered accelerometer measurements (HITL, G_i = 20.0 m/s²)"></a></p>
+<p><a href="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Recovered accelerometer measurements (HITL, G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered accelerometer measurements (HITL, G_i = 20.0 m/s²)"></a></p>
 <figcaption>Recovered accelerometer measurements (HITL, <span class="math inline">\(G_i = 20.0\)</span> m/s²)</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Noise amplitude spectra of accelerometer recovery (HITL, G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectra of accelerometer recovery (HITL, G_i = 20.0 m/s²)"></a></p>
+<p><a href="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Noise amplitude spectra of accelerometer recovery (HITL, G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectra of accelerometer recovery (HITL, G_i = 20.0 m/s²)"></a></p>
 <figcaption>Noise amplitude spectra of accelerometer recovery (HITL, <span class="math inline">\(G_i = 20.0\)</span> m/s²)</figcaption>
 </figure>
 </div>
 <p>In both real-world and simulated attacks, UnRocker’s recovery process consistently distorts drone motion signals — evidenced by noise amplitude peaks in the spectra and significant deviations in yaw rate and accelerometer measurements. The distortion is most pronounced with large-amplitude sensor signals.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="../figures/COMPACT_wara_unrocker_wiener_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Noise amplitude spectrum: WARA vs UnRocker vs Wiener (G_i = 4.0 rad/s)"><img src="../figures/COMPACT_wara_unrocker_wiener_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectrum: WARA vs UnRocker vs Wiener (G_i = 4.0 rad/s)"></a></p>
+<p><a href="../figures/COMPACT_wara_unrocker_wiener_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Noise amplitude spectrum: WARA vs UnRocker vs Wiener (G_i = 4.0 rad/s)"><img src="../figures/COMPACT_wara_unrocker_wiener_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectrum: WARA vs UnRocker vs Wiener (G_i = 4.0 rad/s)"></a></p>
 <figcaption>Noise amplitude spectrum: WARA vs UnRocker vs Wiener (<span class="math inline">\(G_i = 4.0\)</span> rad/s)</figcaption>
 </figure>
 </div>
 <p>UnRocker and the Wiener filter both introduce <strong>new noise peaks in the low-frequency band</strong> — distortions of the drone’s motion signal. WARA’s noise peak at lower frequencies, when present, has a considerably smaller amplitude.</p>
 </section>
-</section>
 <section id="comparison-with-heuristic-filters" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-with-heuristic-filters">Comparison with Heuristic Filters</h2>
-<p>We compare WARA against three classical signal processing methods: <strong>Butterworth</strong> <span class="citation" data-cites="alexander2016digital">(<a href="#ref-alexander2016digital" role="doc-biblioref">Alexander and Williams 2016</a>)</span> (2nd-order, 40 Hz cutoff, the PX4 default), <strong>Savitzky-Golay</strong> <span class="citation" data-cites="schafer2011savitzky">(<a href="#ref-schafer2011savitzky" role="doc-biblioref">Schafer 2011</a>)</span> (polynomial order 6, window length 16, equivalent 40 Hz cutoff), and <strong>Wiener</strong> <span class="citation" data-cites="le2012consistent">(<a href="#ref-le2012consistent" role="doc-biblioref">Roux and Vincent 2013</a>)</span> (window length 255).</p>
-<section id="online-sitl" class="level3">
-<h3 class="anchored" data-anchor-id="online-sitl">Online SITL</h3>
-<p>Both Butterworth and Savitzky-Golay fail to remove the induced signal when the induced frequency falls <strong>below their 40 Hz cutoff</strong>. Reducing the cutoff further would capture low-frequency interference, but at the cost of increased control latency <span class="citation" data-cites="px42025filter">(<a href="#ref-px42025filter" role="doc-biblioref"><span>“<span>MC Filter Tuning &amp; Control Latency</span>,”</span> n.d.</a>)</span> — directly compromising flight performance.</p>
-<p>The Wiener filter effectively removes most induced signals, but its recovered measurements exhibit slower fluctuations and its noise spectrum reveals new peaks in the low-frequency band, causing the flight controller to overreact to attitude adjustments.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../figures/Online Recovery SITL - Heuristic Filter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Recovered gyroscope data — SITL (G_i = 4.0 rad/s, f_i = 20 Hz)"><img src="../figures/Online Recovery SITL - Heuristic Filter.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered gyroscope data — SITL (G_i = 4.0 rad/s, f_i = 20 Hz)"></a></p>
-<figcaption>Recovered gyroscope data — SITL (<span class="math inline">\(G_i = 4.0\)</span> rad/s, <span class="math inline">\(f_i = 20\)</span> Hz)</figcaption>
-</figure>
-</div>
-</section>
-<section id="hitl-results" class="level3">
-<h3 class="anchored" data-anchor-id="hitl-results">HITL Results</h3>
+<p>We compare WARA against three classical signal processing methods: <strong>Butterworth</strong> <span class="citation" data-cites="alexander2016digital">(<a href="#ref-alexander2016digital" role="doc-biblioref">Alexander and Williams 2016</a>)</span> (2nd-order, 40 Hz cutoff, the PX4 default), <strong>Savitzky-Golay</strong> <span class="citation" data-cites="schafer2011savitzky">(<a href="#ref-schafer2011savitzky" role="doc-biblioref">Schafer 2011</a>)</span> (polynomial order 6, window length 16, equivalent 40 Hz cutoff), and <strong>Wiener</strong> <span class="citation" data-cites="le2012consistent">(<a href="#ref-le2012consistent" role="doc-biblioref">Roux and Vincent 2013</a>)</span> (window length 255). <!-- 
+### Online SITL
+
+Both Butterworth and Savitzky-Golay fail to remove the induced signal when the induced frequency falls **below their 40 Hz cutoff**. Reducing the cutoff further would capture low-frequency interference, but at the cost of increased control latency [@px42025filter] — directly compromising flight performance.
+
+The Wiener filter effectively removes most induced signals, but its recovered measurements exhibit slower fluctuations and its noise spectrum reveals new peaks in the low-frequency band, causing the flight controller to overreact to attitude adjustments.
+
+![Recovered gyroscope data — SITL ($G_i = 4.0$ rad/s, $f_i = 20$ Hz)](../figures/Online%20Recovery%20SITL%20-%20Heuristic%20Filter.png){.lightbox width=95%}
+ --> ### HITL Results</p>
 <p>The offline HITL results confirm the online findings. Butterworth and Savitzky-Golay cannot selectively filter out attack interference blended with motion signals. Wiener introduces low-frequency distortion — new peaks appear in the 0–5 Hz band after recovery. WARA isolates interference in the time-frequency domain, removing attack components while preserving motion signals intact.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Recovered gyroscope measurements — HITL (G_i = 4.0 rad/s)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered gyroscope measurements — HITL (G_i = 4.0 rad/s)"></a></p>
+<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Recovered gyroscope measurements — HITL (G_i = 4.0 rad/s)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered gyroscope measurements — HITL (G_i = 4.0 rad/s)"></a></p>
 <figcaption>Recovered gyroscope measurements — HITL (<span class="math inline">\(G_i = 4.0\)</span> rad/s)</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Noise amplitude spectra of gyroscope recovery — HITL (G_i = 4.0 rad/s)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectra of gyroscope recovery — HITL (G_i = 4.0 rad/s)"></a></p>
+<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Noise amplitude spectra of gyroscope recovery — HITL (G_i = 4.0 rad/s)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_gyro_0_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectra of gyroscope recovery — HITL (G_i = 4.0 rad/s)"></a></p>
 <figcaption>Noise amplitude spectra of gyroscope recovery — HITL (<span class="math inline">\(G_i = 4.0\)</span> rad/s)</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Recovered accelerometer measurements — HITL (G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered accelerometer measurements — HITL (G_i = 20.0 m/s²)"></a></p>
+<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Recovered accelerometer measurements — HITL (G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Recovered accelerometer measurements — HITL (G_i = 20.0 m/s²)"></a></p>
 <figcaption>Recovered accelerometer measurements — HITL (<span class="math inline">\(G_i = 20.0\)</span> m/s²)</figcaption>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Noise amplitude spectra of accelerometer recovery — HITL (G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="img-fluid figure-img" style="width:95.0%" alt="Noise amplitude spectra of accelerometer recovery — HITL (G_i = 20.0 m/s²)"></a></p>
-<figcaption>Noise amplitude spectra of accelerometer recovery — HITL (<span class="math inline">\(G_i = 20.0\)</span> m/s²)</figcaption>
-</figure>
-</div>
-</section>
-</section>
-<section id="comparison-with-vimu" class="level2">
-<h2 class="anchored" data-anchor-id="comparison-with-vimu">Comparison with VIMU</h2>
-<p><strong>VIMU</strong> <span class="citation" data-cites="wang2024vimu">(<a href="#ref-wang2024vimu" role="doc-biblioref">Wang et al. 2024</a>)</span> is the SOTA physics-based attack resilience (PBAR) approach. It predicts system states using a nonlinear physical model and replaces compromised IMU data with these predictions. Unlike UnRocker, VIMU meets real-time constraints on our FC boards, enabling direct online HITL comparison.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../figures/Online Recovery Comparison - VIMU.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Flight attitude in gyroscope recovery (HITL, G_i = 4.0 rad/s)"><img src="../figures/Online Recovery Comparison - VIMU.png" class="img-fluid figure-img" style="width:95.0%" alt="Flight attitude in gyroscope recovery (HITL, G_i = 4.0 rad/s)"></a></p>
-<figcaption>Flight attitude in gyroscope recovery (HITL, <span class="math inline">\(G_i = 4.0\)</span> rad/s)</figcaption>
-</figure>
-</div>
-<div class="video-grid">
-<div class="video-card">
-<p><strong>VIMU: HITL → Crash</strong></p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/QuCzp0DWLyM" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-</div>
-<div class="video-card">
-<p><strong>WARA: CUAV V5+ HITL Recovery</strong></p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Jy8DYvhUaSE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-</div>
-</div>
-<p>The drone equipped with VIMU quickly lost control and crashed shortly after the attack began. VIMU’s recovery duration in HITL is shorter than simulation results reported in prior work <span class="citation" data-cites="wang2024vimu">(<a href="#ref-wang2024vimu" role="doc-biblioref">Wang et al. 2024</a>)</span> because we apply a significantly larger attack amplitude (<strong>4.0 vs.&nbsp;0.6 rad/s</strong>). Additionally, sampling jitter affects VIMU’s physical model — the model predicts attitude changes per system control interval, but jitter disrupts the timing relationship between sensor samples and control updates.</p>
-</section>
-<section id="comparison-with-specguard" class="level2">
-<h2 class="anchored" data-anchor-id="comparison-with-specguard">Comparison with SpecGuard</h2>
-<p><strong>SpecGuard</strong> <span class="citation" data-cites="dash2024specguard">(<a href="#ref-dash2024specguard" role="doc-biblioref">Dash et al. 2024</a>)</span> is the SOTA fault-tolerant control (FTC) approach. Unlike filter-based and PBAR solutions, SpecGuard does not directly recover compromised measurements. Instead, it employs a deep-RL robust controller that activates upon attack detection, aiming to keep the drone within predefined mission specifications (e.g., minimum flight altitude, position boundary). We deployed SpecGuard on Navio2@Raspberry Pi 3B+ for HITL simulation.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../figures/Fig.XX Flight Altitude in Gyro Recovery - SpecGuard HITL Online.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Flight altitude in gyroscope recovery (SpecGuard, HITL)"><img src="../figures/Fig.XX Flight Altitude in Gyro Recovery - SpecGuard HITL Online.png" class="img-fluid figure-img" style="width:95.0%" alt="Flight altitude in gyroscope recovery (SpecGuard, HITL)"></a></p>
-<figcaption>Flight altitude in gyroscope recovery (SpecGuard, HITL)</figcaption>
-</figure>
-</div>
-<p>After the attack began, the drone quickly violated the minimum altitude specification and veered off the 10 m position boundary <span class="citation" data-cites="dash2024specguard">(<a href="#ref-dash2024specguard" role="doc-biblioref">Dash et al. 2024</a>)</span>, resulting in a short recovery duration (<strong>&lt; 10 seconds</strong>). SpecGuard’s performance degrades relative to reported simulation results <span class="citation" data-cites="dash2024specguard">(<a href="#ref-dash2024specguard" role="doc-biblioref">Dash et al. 2024</a>)</span> because we apply the IMU attack to <strong>all gyroscope instances</strong> simultaneously — without reliable IMU measurements, the autopilot’s state estimation is disrupted, defeating the RL controller’s ability to maintain specifications.</p>
+<p><a href="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Noise amplitude spectra of accelerometer recovery — HITL (G_i = 20.0 m/s²)"><img src="../figures/HITL Comparison - Heuristic Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png" class="img-fluid" style="width:95.0%" alt="Noise amplitude spectra of accelerometer recovery — HITL (G_i = 20.0 m/s²)"></a> <!-- 
+## Comparison with VIMU
+
+**VIMU** [@wang2024vimu] is the SOTA physics-based attack resilience (PBAR) approach. It predicts system states using a nonlinear physical model and replaces compromised IMU data with these predictions. Unlike UnRocker, VIMU meets real-time constraints on our FC boards, enabling direct online HITL comparison.
+
+![Flight attitude in gyroscope recovery (HITL, $G_i = 4.0$ rad/s)](../figures/Online%20Recovery%20Comparison%20-%20VIMU.png){.lightbox width=95%}
+
+::: {.video-grid}
+
+::: {.video-card}
+**VIMU: HITL → Crash**
+
+
+:::
+
+::: {.video-card}
+**WARA: CUAV V5+ HITL Recovery**
+
+
+:::
+
+:::
+
+The drone equipped with VIMU quickly lost control and crashed shortly after the attack began. VIMU's recovery duration in HITL is shorter than simulation results reported in prior work [@wang2024vimu] because we apply a significantly larger attack amplitude (**4.0 vs. 0.6 rad/s**). Additionally, sampling jitter affects VIMU's physical model — the model predicts attitude changes per system control interval, but jitter disrupts the timing relationship between sensor samples and control updates.
+
+## Comparison with SpecGuard
+
+**SpecGuard** [@dash2024specguard] is the SOTA fault-tolerant control (FTC) approach. Unlike filter-based and PBAR solutions, SpecGuard does not directly recover compromised measurements. Instead, it employs a deep-RL robust controller that activates upon attack detection, aiming to keep the drone within predefined mission specifications (e.g., minimum flight altitude, position boundary). We deployed SpecGuard on Navio2@Raspberry Pi 3B+ for HITL simulation.
+
+![Flight altitude in gyroscope recovery (SpecGuard, HITL)](../figures/Fig.XX%20Flight%20Altitude%20in%20Gyro%20Recovery%20-%20SpecGuard%20HITL%20Online.png){.lightbox width=95%}
+
+After the attack began, the drone quickly violated the minimum altitude specification and veered off the 10 m position boundary [@dash2024specguard], resulting in a short recovery duration (**< 10 seconds**). SpecGuard's performance degrades relative to reported simulation results [@dash2024specguard] because we apply the IMU attack to **all gyroscope instances** simultaneously — without reliable IMU measurements, the autopilot's state estimation is disrupted, defeating the RL controller's ability to maintain specifications.
+ --></p>
 
 
 
@@ -479,26 +449,11 @@ window.Quarto = {
 <div id="ref-alexander2016digital" class="csl-entry" role="listitem">
 Alexander, Winser, and Cranos M Williams. 2016. <em>Digital Signal Processing: Principles, Algorithms and System Design</em>. Academic Press.
 </div>
-<div id="ref-choi2020software" class="csl-entry" role="listitem">
-Choi, Hongjun, Sayali Kate, Yousra Aafer, Xiangyu Zhang, and Dongyan Xu. 2020. <span>“Software-Based Realtime Recovery from Sensor Attacks on Robotic Vehicles.”</span> <em><span>RAID</span> ’20</em>, 349–64.
-</div>
-<div id="ref-dash2024specguard" class="csl-entry" role="listitem">
-Dash, Pritam, Ethan Chan, and Karthik Pattabiraman. 2024. <span>“SpecGuard: Specification Aware Recovery for Robotic Autonomous Vehicles from Physical Attacks.”</span> <em><span>CCS</span> ’24</em>, 1849–63.
-</div>
-<div id="ref-jeong2023rocking" class="csl-entry" role="listitem">
-Jeong, Jinseob, Dongkwan Kim, Joon-Ha Jang, Juhwan Noh, Changhun Song, and Yongdae Kim. 2023. <span>“Un-Rocking Drones: Foundations of Acoustic Injection Attacks and Recovery Thereof.”</span> <em><span>NDSS</span> ’23</em>.
-</div>
-<div id="ref-px42025filter" class="csl-entry" role="listitem">
-<span>“<span>MC Filter Tuning &amp; Control Latency</span>.”</span> n.d. <a href="https://docs.px4.io/main/en/config_mc/filter_tuning.html">https://docs.px4.io/main/en/config_mc/filter_tuning.html</a>.
-</div>
 <div id="ref-le2012consistent" class="csl-entry" role="listitem">
 Roux, Jonathan Le, and Emmanuel Vincent. 2013. <span>“Consistent Wiener Filtering for Audio Source Separation.”</span> <em><span>IEEE</span> Signal Process. Lett.</em> 20 (3): 217–20.
 </div>
 <div id="ref-schafer2011savitzky" class="csl-entry" role="listitem">
 Schafer, Ronald W. 2011. <span>“What Is a Savitzky-Golay Filter? [Lecture Notes].”</span> <em><span>IEEE</span> Signal Process. Mag.</em> 28 (4): 111–17.
-</div>
-<div id="ref-wang2024vimu" class="csl-entry" role="listitem">
-Wang, Yunbo, Cong Sun, Qiaosen Liu, et al. 2024. <span>“<span>VIMU:</span> Effective Physics-Based Realtime Detection and Recovery Against Stealthy Attacks on UAVs.”</span> <em><span>ACSAC</span> ’24</em>, 1015–31.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -908,8 +863,8 @@ Wang, Yunbo, Cong Sun, Qiaosen Liu, et al. 2024. <span>“<span>VIMU:</span> Eff
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../pages/advanced-attack.html" class="pagination-link" aria-label="Advanced Attack Waveforms">
-        <span class="nav-page-text">Advanced Attack Waveforms</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../pages/external-disturbance.html" class="pagination-link" aria-label="Impact of External Disturbance">
+        <span class="nav-page-text">Impact of External Disturbance</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

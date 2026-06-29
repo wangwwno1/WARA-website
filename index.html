@@ -218,12 +218,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pages/advanced-attack.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Advanced Attack Waveforms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./pages/external-disturbance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Impact of External Disturbance</span></a>
   </div>
@@ -237,7 +231,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#wara-wavelet-based-realtime-recovery-against-acoustic-injection-attacks-on-uav" id="toc-wara-wavelet-based-realtime-recovery-against-acoustic-injection-attacks-on-uav" class="nav-link active" data-scroll-target="#wara-wavelet-based-realtime-recovery-against-acoustic-injection-attacks-on-uav">WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV</a></li>
-  <li><a href="#key-contributions" id="toc-key-contributions" class="nav-link" data-scroll-target="#key-contributions">Key Contributions</a></li>
   <li><a href="#featured-videos" id="toc-featured-videos" class="nav-link" data-scroll-target="#featured-videos">Featured Videos</a></li>
   <li><a href="#cite-this-paper" id="toc-cite-this-paper" class="nav-link" data-scroll-target="#cite-this-paper">Cite This Paper</a></li>
   </ul>
@@ -259,26 +252,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Xidian University · Xi’an, Shaanxi, China</p>
 <p><sup>✉</sup> Corresponding author: <a href="mailto:suncong@xidian.edu.cn">suncong@xidian.edu.cn</a></p>
 </section>
-<section id="key-contributions" class="level2">
-<h2 class="anchored" data-anchor-id="key-contributions">Key Contributions</h2>
-<div class="contrib-grid">
-<section id="multi-imu-attacks" class="level3 contrib-card">
-<h3 class="anchored" data-anchor-id="multi-imu-attacks">🎯 Multi-IMU Attacks</h3>
-<p>We develop a low-cost ($28) attack device that simultaneously injects acoustic interference into multiple heterogeneous IMUs, bypassing physical shielding and IMU redundancy on commercial flight controllers.</p>
-</section>
-<section id="wavelet-recovery" class="level3 contrib-card">
-<h3 class="anchored" data-anchor-id="wavelet-recovery">🔬 Wavelet Recovery</h3>
-<p><strong>WARA</strong> uses wavelet packet decomposition to isolate attack interference by amplitude. A redundant IMU instance preserves benign signal components — even if all IMUs are compromised.</p>
-</section>
-<section id="real-world-flights" class="level3 contrib-card">
-<h3 class="anchored" data-anchor-id="real-world-flights">🚁 Real-World Flights</h3>
-<p>Implemented on PX4 autopilot (CUAV V5+, Pixhawk 6C Mini). Real-world flight tests sustain stable flight for 2–5 minutes under acoustic attacks, far exceeding SOTA recovery durations.</p>
-</section>
-</div>
+<!-- 
+## Key Contributions
+
+::: {.contrib-grid}
+
+::: {.contrib-card}
+### 🎯 Multi-IMU Attacks
+We develop a low-cost (\$28) attack device that simultaneously injects acoustic interference into multiple heterogeneous IMUs, bypassing physical shielding and IMU redundancy on commercial flight controllers.
+:::
+
+::: {.contrib-card}
+### 🔬 Wavelet Recovery
+**WARA** uses wavelet packet decomposition to isolate attack interference by amplitude. A redundant IMU instance preserves benign signal components — even if all IMUs are compromised.
+:::
+
+::: {.contrib-card}
+### 🚁 Real-World Flights
+Implemented on PX4 autopilot (CUAV V5+, Pixhawk 6C Mini). Real-world flight tests sustain stable flight for 2–5 minutes under acoustic attacks, far exceeding SOTA recovery durations.
+:::
+
+:::
+ -->
 <!-- ## System Architecture
 
 ![Overall workflow of WARA](figures/Overall-Workflow.png){.lightbox width=100%} -->
-</section>
 <section id="featured-videos" class="level2">
 <h2 class="anchored" data-anchor-id="featured-videos">Featured Videos</h2>
 <div class="video-grid">
@@ -288,7 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="video-card">
 <p><strong>Attack: F330 Dual-IMU Attack on Vanilla ArduPilot</strong></p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/ixKhjv_T_vQ" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Kh-PU02mgns" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </div>
 <div class="video-card">
 <p><strong>Recovery: F330 Real Attack Recovery with WARA</strong></p>
