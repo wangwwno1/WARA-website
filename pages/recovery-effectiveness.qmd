@@ -1,7 +1,7 @@
 ---
 title: "Recovery Effectiveness"
 ---
-
+<!-- 
 ## Effective Recovery Duration
 
 To compare all approaches on a common metric, we use **effective recovery duration** [@choi2020software]: the elapsed time from the first detection alarm ($t_{alarm}$) until the drone's estimated position deviates from the actual position by more than $\epsilon = 3$ meters — indicating loss of stable flight. This metric reflects *sustained operational safety under attack*, not merely signal-level recovery quality. All results below are measured in **HITL simulation** on the same hardware for fair comparison.
@@ -58,7 +58,8 @@ To thoroughly compare recovery *quality* without the confounding effect of proce
 
 Both methods effectively suppress the acoustic injection attacks — reduced sensor fluctuations and diminished attack signal peaks confirm this. However, UnRocker's recovered measurements **deviate from the drone's actual state**. When the actual pitch rate exceeds 1.0 rad/s, UnRocker returns near-zero output — the deep model distorts benign motion signals during recovery. The noise amplitude spectrum reveals new peaks in the 0–5 Hz band absent before recovery, confirming UnRocker introduces low-frequency signal distortion.
 
-WARA's **orthogonal wavelet packet transform** preserves drone motion signals while efficiently removing induced signals. Because orthogonal WPD is an invertible linear transformation, it preserves the energy and details of the input — benign signal components pass through recovery intact.
+WARA's **orthogonal wavelet packet transform** preserves drone motion signals while efficiently removing induced signals. Because orthogonal WPD is an invertible linear transformation, it preserves the energy and details of the input — benign signal components pass through recovery intact. 
+-->
 
 ### Offline: Touch-Based Real-World Attack
 
@@ -83,7 +84,7 @@ UnRocker and the Wiener filter both introduce **new noise peaks in the low-frequ
 ## Comparison with Heuristic Filters
 
 We compare WARA against three classical signal processing methods: **Butterworth** [@alexander2016digital] (2nd-order, 40 Hz cutoff, the PX4 default), **Savitzky-Golay** [@schafer2011savitzky] (polynomial order 6, window length 16, equivalent 40 Hz cutoff), and **Wiener** [@le2012consistent] (window length 255).
-
+<!-- 
 ### Online SITL
 
 Both Butterworth and Savitzky-Golay fail to remove the induced signal when the induced frequency falls **below their 40 Hz cutoff**. Reducing the cutoff further would capture low-frequency interference, but at the cost of increased control latency [@px42025filter] — directly compromising flight performance.
@@ -91,7 +92,7 @@ Both Butterworth and Savitzky-Golay fail to remove the induced signal when the i
 The Wiener filter effectively removes most induced signals, but its recovered measurements exhibit slower fluctuations and its noise spectrum reveals new peaks in the low-frequency band, causing the flight controller to overreact to attitude adjustments.
 
 ![Recovered gyroscope data — SITL ($G_i = 4.0$ rad/s, $f_i = 20$ Hz)](../figures/Online%20Recovery%20SITL%20-%20Heuristic%20Filter.png){.lightbox width=95%}
-
+ -->
 ### HITL Results
 
 The offline HITL results confirm the online findings. Butterworth and Savitzky-Golay cannot selectively filter out attack interference blended with motion signals. Wiener introduces low-frequency distortion — new peaks appear in the 0–5 Hz band after recovery. WARA isolates interference in the time-frequency domain, removing attack components while preserving motion signals intact.
@@ -103,7 +104,7 @@ The offline HITL results confirm the online findings. Butterworth and Savitzky-G
 ![Recovered accelerometer measurements — HITL ($G_i = 20.0$ m/s²)](../figures/HITL%20Comparison%20-%20Heuristic%20Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png){.lightbox width=95%}
 
 ![Noise amplitude spectra of accelerometer recovery — HITL ($G_i = 20.0$ m/s²)](../figures/HITL%20Comparison%20-%20Heuristic%20Filters/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png){.lightbox width=95%}
-
+<!-- 
 ## Comparison with VIMU
 
 **VIMU** [@wang2024vimu] is the SOTA physics-based attack resilience (PBAR) approach. It predicts system states using a nonlinear physical model and replaces compromised IMU data with these predictions. Unlike UnRocker, VIMU meets real-time constraints on our FC boards, enabling direct online HITL comparison.
@@ -135,4 +136,4 @@ The drone equipped with VIMU quickly lost control and crashed shortly after the 
 ![Flight altitude in gyroscope recovery (SpecGuard, HITL)](../figures/Fig.XX%20Flight%20Altitude%20in%20Gyro%20Recovery%20-%20SpecGuard%20HITL%20Online.png){.lightbox width=95%}
 
 After the attack began, the drone quickly violated the minimum altitude specification and veered off the 10 m position boundary [@dash2024specguard], resulting in a short recovery duration (**< 10 seconds**). SpecGuard's performance degrades relative to reported simulation results [@dash2024specguard] because we apply the IMU attack to **all gyroscope instances** simultaneously — without reliable IMU measurements, the autopilot's state estimation is disrupted, defeating the RL controller's ability to maintain specifications.
-
+ -->

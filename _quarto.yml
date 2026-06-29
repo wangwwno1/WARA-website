@@ -34,8 +34,8 @@ website:
         contents:
           - text: "Recovery Effectiveness"
             href: pages/recovery-effectiveness.qmd
-          - text: "Advanced Attack Waveforms"
-            href: pages/advanced-attack.qmd
+          # - text: "Advanced Attack Waveforms"
+          #   href: pages/advanced-attack.qmd
           - text: "Impact of External Disturbance"
             href: pages/external-disturbance.qmd
   page-footer:
