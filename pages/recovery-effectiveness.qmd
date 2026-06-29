@@ -59,7 +59,6 @@ To thoroughly compare recovery *quality* without the confounding effect of proce
 Both methods effectively suppress the acoustic injection attacks — reduced sensor fluctuations and diminished attack signal peaks confirm this. However, UnRocker's recovered measurements **deviate from the drone's actual state**. When the actual pitch rate exceeds 1.0 rad/s, UnRocker returns near-zero output — the deep model distorts benign motion signals during recovery. The noise amplitude spectrum reveals new peaks in the 0–5 Hz band absent before recovery, confirming UnRocker introduces low-frequency signal distortion.
 
 WARA's **orthogonal wavelet packet transform** preserves drone motion signals while efficiently removing induced signals. Because orthogonal WPD is an invertible linear transformation, it preserves the energy and details of the input — benign signal components pass through recovery intact. 
--->
 
 ### Offline: Touch-Based Real-World Attack
 
@@ -68,18 +67,18 @@ We further compare recovery against **touch-based acoustic attacks** on the ICM-
 ![Recovered gyroscope measurements (touch-based, $G_i = 1.9$ rad/s)](../figures/RealWorld%20Offline%20-%20UnRocker/OfflineEval_RealAttack_sensor_gyro_lineplot.png){.lightbox width=95%}
 
 ![Noise amplitude spectra of gyroscope recovery (touch-based, $G_i = 1.9$ rad/s)](../figures/RealWorld%20Offline%20-%20UnRocker/OfflineEval_RealAttack_sensor_gyro_fftplot.png){.lightbox width=95%}
-
+ -->
 ### HITL: Accelerometer Attack
+
+In both real-world and simulated attacks, UnRocker's recovery process consistently distorts drone motion signals — evidenced by noise amplitude peaks in the spectra and significant deviations in yaw rate and accelerometer measurements. The distortion is most pronounced with large-amplitude sensor signals.
 
 ![Recovered accelerometer measurements (HITL, $G_i = 20.0$ m/s²)](../figures/HITL%20Comparison%20-%20Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_lineplot.png){.lightbox width=95%}
 
 ![Noise amplitude spectra of accelerometer recovery (HITL, $G_i = 20.0$ m/s²)](../figures/HITL%20Comparison%20-%20Unrocker/ComplexManeuver_SimulationAttack_log_0_sensor_accel_0_fftplot.png){.lightbox width=95%}
 
-In both real-world and simulated attacks, UnRocker's recovery process consistently distorts drone motion signals — evidenced by noise amplitude peaks in the spectra and significant deviations in yaw rate and accelerometer measurements. The distortion is most pronounced with large-amplitude sensor signals.
+<!-- ![Noise amplitude spectrum: WARA vs UnRocker vs Wiener ($G_i = 4.0$ rad/s)](../figures/COMPACT_wara_unrocker_wiener_fftplot.png){.lightbox width=95%}
 
-![Noise amplitude spectrum: WARA vs UnRocker vs Wiener ($G_i = 4.0$ rad/s)](../figures/COMPACT_wara_unrocker_wiener_fftplot.png){.lightbox width=95%}
-
-UnRocker and the Wiener filter both introduce **new noise peaks in the low-frequency band** — distortions of the drone's motion signal. WARA's noise peak at lower frequencies, when present, has a considerably smaller amplitude.
+UnRocker and the Wiener filter both introduce **new noise peaks in the low-frequency band** — distortions of the drone's motion signal. WARA's noise peak at lower frequencies, when present, has a considerably smaller amplitude. -->
 
 ## Comparison with Heuristic Filters
 

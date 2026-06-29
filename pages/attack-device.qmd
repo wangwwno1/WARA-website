@@ -1,5 +1,5 @@
 ---
-title: "Attack Device Specification"
+title: "Attack Device Design"
 ---
 
 ## Overview

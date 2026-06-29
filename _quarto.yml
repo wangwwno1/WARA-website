@@ -22,7 +22,7 @@ website:
     contents:
       - text: "Home"
         href: index.qmd
-      - text: "Attack Device Specification"
+      - text: "Attack Device Design"
         href: pages/attack-device.qmd
       - section: "WARA Defense"
         contents:
@@ -30,7 +30,7 @@ website:
             href: pages/wavelet-partition.qmd
           - text: "Detector Parameter Selection"
             href: pages/detector-parameters.qmd
-      - section: "Evaluation Results"
+      - section: "Supplemental Results"
         contents:
           - text: "Recovery Effectiveness"
             href: pages/recovery-effectiveness.qmd
