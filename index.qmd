@@ -14,7 +14,7 @@ Xidian University · Xi'an, Shaanxi, China
 
 :::
 
-
+<!-- 
 ## Key Contributions
 
 ::: {.contrib-grid}
@@ -35,7 +35,7 @@ Implemented on PX4 autopilot (CUAV V5+, Pixhawk 6C Mini). Real-world flight test
 :::
 
 :::
-
+ -->
 <!-- ## System Architecture
 
 ![Overall workflow of WARA](figures/Overall-Workflow.png){.lightbox width=100%} -->
@@ -53,7 +53,7 @@ Implemented on PX4 autopilot (CUAV V5+, Pixhawk 6C Mini). Real-world flight test
 ::: {.video-card}
 **Attack: F330 Dual-IMU Attack on Vanilla ArduPilot**
 
-{{< video https://youtu.be/ixKhjv_T_vQ >}}
+{{< video https://youtu.be/Kh-PU02mgns >}}
 :::
 
 ::: {.video-card}
