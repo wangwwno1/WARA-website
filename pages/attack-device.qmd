@@ -19,11 +19,21 @@ The device supports two transducer types, each serving a distinct role:
 
 By adjusting pulse-width and frequency, the microcontroller independently controls the amplitude and frequency of the acoustic signal on each PWM channel. Generally, this device achieves remote attack amplitudes ranging from **0.2 to 2.0 rad/s** on each targeted IMU — broader coverage than prior work [@jeong2023rocking; @gao2023exploring].
 
-## Remote Attack in Lab Setting
+## Remote Attack: From Lab to Real-World
 
 We demonstrated remote multi-IMU attacks in a laboratory setting. Commercial flight controllers typically equip multiple heterogeneous IMUs for redundancy, and each IMU model has a distinct resonance frequency band. Because these bands rarely overlap, an attacker cannot compromise all IMUs with a single acoustic frequency — hence the need for **simultaneous multi-frequency injection**.
 
 For each target IMU, we assemble a dedicated $2 \times 2$ ultrasonic emitter array placed 25 cm from the flight controller. Each array emits acoustic signals tuned to the resonance frequency band of its target IMU. During evaluation, the drone motors were armed to assess the impact of motor noise on attack effectiveness.
+
+The multi-IMU acoustic attacks generated with our attack unit can effectively overwhelm the IMU redundancy mechanisms. We inject remote acoustic attack signals simultaneously at different frequencies, each matching the resonance band of a target IMU. We examine inter-signal interference by injecting the attack waves from the same orientation to the FC board. Our emitter arrays can conduct effective remote multi-IMU attacks from several orientations.
+
+Compared to the $2 \times 2$ array, a single emitter can achieve similar amplitudes at 7 cm. Reducing this distance further to 1 cm increases the attack amplitude to approximately 2.2 rad/s on a BMI055 IMU, enabling the onboard attack unit deployment used in our real-world flight tests (detailed on the [Real-World Flight Tests](real-world-flights.qmd) page).
+
+To illustrate that the attack amplitudes of around 0.20 rad/s on ICM-42688P and MPU-6000 are effective, our real flight tests demonstrate that such amplitudes can cause a drone to crash if the induced frequency falls within the motion signal band.
+
+Note that the ground truth collection in real flight tests differs from the collection in the laboratory. In real flights, the drone takes another attack-free FC board to ensure flight safety and provide attack-free ground truths. We record the drone's motion signals with the IMUs on this attack-free board as the ground truth. We calculate the error between compromised and ground-truth measurements, and the largest error defines the maximum attack amplitude.
+
+The lab video demonstrates simultaneous multi-IMU injection in a controlled setting; the flight video shows that even moderate amplitudes (~0.20 rad/s) cause a real drone to crash.
 
 ::: {.video-grid}
 
@@ -33,11 +43,13 @@ For each target IMU, we assemble a dedicated $2 \times 2$ ultrasonic emitter arr
 {{< video https://youtu.be/HqhufvUzA5o >}}
 :::
 
+::: {.video-card}
+**F330 Remote Attack → Crash (Real-World, 0.20 rad/s)**
+
+{{< video https://youtu.be/Bm8eF30axdE >}}
 :::
 
-## From Emitter Arrays to Closer-Range Attacks
-
-Interestingly, we observed that a **single ultrasonic emitter** at 7 cm can achieve similar attack amplitudes as a full $2 \times 2$ array at 25 cm. Inspired by this, we developed closer-range attacks at just 1 cm to further increase attack intensity. This compact setup — a single emitter placed near the IMU — can be deployed directly on the drone for real-world flight tests, achieving attack amplitudes up to ~2.2 rad/s on the BMI055 IMU.
+:::
 
 Although our prototype is limited to short range, long-range attacks remain viable with high-power hardware (e.g., a Genasys LRAD 1950XL [@genasys2025lrad] could achieve equivalent intensity at over 12 meters [@son2015rocking]).
 
@@ -52,25 +64,5 @@ Transducers are positioned directly above each target IMU. IMU locations are det
 ![Pixhawk 6C Mini](../figures/PZT%20Layout/Transducer%20Layout%20-%206C%20Mini%20Remote.png){.lightbox}
 
 ![Mounted on F330 quadcopter](../figures/PZT%20Layout/Drone%20Layout%20-%206C%20Mini%20Remote.jpg){.lightbox}
-
-:::
-
-## Real-World Flight Tests
-
-The attack device was deployed on an F330 quadcopter for real-world flight testing. Even at low amplitudes (~0.20 rad/s), remote attacks can cause an unprotected drone to crash.
-
-::: {.video-grid}
-
-::: {.video-card}
-**F330 Remote Attack → Crash (Real-World, 0.20 rad/s)**
-
-{{< video https://youtu.be/Bm8eF30axdE >}}
-:::
-
-::: {.video-card}
-**F330 Dual-IMU Attack on Vanilla ArduPilot (No WARA)**
-
-{{< video https://youtu.be/ixKhjv_T_vQ >}}
-:::
 
 :::

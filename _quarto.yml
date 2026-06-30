@@ -30,6 +30,8 @@ website:
             href: pages/wavelet-partition.qmd
           - text: "Detector Parameter Selection"
             href: pages/detector-parameters.qmd
+      - text: "Real-World Flight Tests"
+        href: pages/real-world-flights.qmd
       - section: "Supplemental Results"
         contents:
           - text: "Recovery Effectiveness"

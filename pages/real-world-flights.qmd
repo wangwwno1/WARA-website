@@ -1,0 +1,53 @@
+---
+title: "Real-World Flight Tests"
+---
+
+## WARA Recovery in Real-World Flights
+
+We demonstrate WARA's recovery performance by performing acoustic injection attacks on two real-world quadcopters (ZD550 and F330). During these tests, the drones take off from their home and hover at a preset altitude. Then, using our attack device, we initiate the acoustic injection attacks to disrupt gyroscope measurements.
+
+Due to physical shielding, our attack unit achieves only a 0.20 rad/s amplitude in the touch-based attack on the CUAV V5+ board. Hence, we further test WARA's recovery performance on the ZD550 using a simulated attack with $G_i = 0.60$ rad/s, whose amplitude matches that of the attack in the real-world test reported in [@wang2024vimu].
+
+With WARA's detection and recovery, all drones avoid immediate crash and maintain stable flight for an extended duration until they land due to low battery. In particular, the F330 drone flies for **4.5 minutes** under the remote attack, while the ZD550 drone sustains flight for **2 minutes** (under the real-world touch-based attack) and **3.5 minutes** (under simulated attack). These results consistently surpass the recovery duration of VIMU (26.1 seconds) reported in [@wang2024vimu].
+
+::: {.video-grid-3}
+
+::: {.video-card}
+**F330 Real Attack Recovery (4.5 min)**
+
+{{< video https://youtu.be/9KQJXdmpxQ0 >}}
+:::
+
+::: {.video-card}
+**ZD550 Real-World Attack Recovery (2 min)**
+
+{{< video https://youtu.be/c-nOE6so44M >}}
+:::
+
+::: {.video-card}
+**ZD550 Simulated Attack Recovery (3.5 min)**
+
+{{< video https://youtu.be/beH2WQqdEng >}}
+:::
+
+:::
+
+## Vulnerability of Vanilla ArduPilot
+
+We also demonstrate the inefficacy of vanilla ArduPilot [@ArduPilot] against the same attack setting on the F330 quadcopter. ArduPilot is considered less susceptible than PX4 as it enables low-pass filters in sensor hardware, implements a sophisticated dynamic notch filter, and applies stricter thresholds in its fail-safe logic [@kim2024systematic]. Despite these measures, the drone with vanilla ArduPilot rapidly oscillates and crashes within five seconds, indicating that vanilla ArduPilot alone is insufficient to mitigate the real-world acoustic injection attack.
+
+::: {.video-grid}
+
+::: {.video-card}
+**F330 Remote Attack → Crash (0.20 rad/s)**
+
+{{< video https://youtu.be/Bm8eF30axdE >}}
+:::
+
+::: {.video-card}
+**ArduPilot Rapid Crash (5s)**
+
+{{< video https://youtu.be/Kh-PU02mgns >}}
+:::
+
+:::
