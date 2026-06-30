@@ -60,223 +60,37 @@
     ]
   },
   {
-    "objectID": "pages/external-disturbance.html",
-    "href": "pages/external-disturbance.html",
-    "title": "Impact of External Disturbance",
+    "objectID": "pages/real-world-flights.html",
+    "href": "pages/real-world-flights.html",
+    "title": "Real-World Flight Tests",
     "section": "",
-    "text": "External disturbances such as wind gusts affect drone state estimation in various ways (Tomic et al. 2020). However, these disturbances typically induce consistent motion across all redundant IMUs on the flight controller board. This consistency supports WARA’s approach: redundant IMUs experience the same benign disturbances, allowing the detectors to distinguish between external forces (common to all IMUs) and acoustic attack interference (isolated to specific IMUs).",
+    "text": "We demonstrate WARA’s recovery performance by performing acoustic injection attacks on two real-world quadcopters (ZD550 and F330). During these tests, the drones take off from their home and hover at a preset altitude. Then, using our attack device, we initiate the acoustic injection attacks to disrupt gyroscope measurements.\nDue to physical shielding, our attack unit achieves only a 0.20 rad/s amplitude in the touch-based attack on the CUAV V5+ board. Hence, we further test WARA’s recovery performance on the ZD550 using a simulated attack with \\(G_i = 0.60\\) rad/s, whose amplitude matches that of the attack in the real-world test reported in (Wang et al. 2024).\nWith WARA’s detection and recovery, all drones avoid immediate crash and maintain stable flight for an extended duration until they land due to low battery. In particular, the F330 drone flies for 4.5 minutes under the remote attack, while the ZD550 drone sustains flight for 2 minutes (under the real-world touch-based attack) and 3.5 minutes (under simulated attack). These results consistently surpass the recovery duration of VIMU (26.1 seconds) reported in (Wang et al. 2024).\n\n\nF330 Real Attack Recovery (4.5 min)\n\n\n\nZD550 Real-World Attack Recovery (2 min)\n\n\n\nZD550 Simulated Attack Recovery (3.5 min)",
     "crumbs": [
       "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Supplemental Results",
-      "Impact of External Disturbance"
+      "Real-World Flight Tests"
     ]
   },
   {
-    "objectID": "pages/external-disturbance.html#overview",
-    "href": "pages/external-disturbance.html#overview",
-    "title": "Impact of External Disturbance",
+    "objectID": "pages/real-world-flights.html#wara-recovery-in-real-world-flights",
+    "href": "pages/real-world-flights.html#wara-recovery-in-real-world-flights",
+    "title": "Real-World Flight Tests",
     "section": "",
-    "text": "External disturbances such as wind gusts affect drone state estimation in various ways (Tomic et al. 2020). However, these disturbances typically induce consistent motion across all redundant IMUs on the flight controller board. This consistency supports WARA’s approach: redundant IMUs experience the same benign disturbances, allowing the detectors to distinguish between external forces (common to all IMUs) and acoustic attack interference (isolated to specific IMUs).",
+    "text": "We demonstrate WARA’s recovery performance by performing acoustic injection attacks on two real-world quadcopters (ZD550 and F330). During these tests, the drones take off from their home and hover at a preset altitude. Then, using our attack device, we initiate the acoustic injection attacks to disrupt gyroscope measurements.\nDue to physical shielding, our attack unit achieves only a 0.20 rad/s amplitude in the touch-based attack on the CUAV V5+ board. Hence, we further test WARA’s recovery performance on the ZD550 using a simulated attack with \\(G_i = 0.60\\) rad/s, whose amplitude matches that of the attack in the real-world test reported in (Wang et al. 2024).\nWith WARA’s detection and recovery, all drones avoid immediate crash and maintain stable flight for an extended duration until they land due to low battery. In particular, the F330 drone flies for 4.5 minutes under the remote attack, while the ZD550 drone sustains flight for 2 minutes (under the real-world touch-based attack) and 3.5 minutes (under simulated attack). These results consistently surpass the recovery duration of VIMU (26.1 seconds) reported in (Wang et al. 2024).\n\n\nF330 Real Attack Recovery (4.5 min)\n\n\n\nZD550 Real-World Attack Recovery (2 min)\n\n\n\nZD550 Simulated Attack Recovery (3.5 min)",
     "crumbs": [
       "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Supplemental Results",
-      "Impact of External Disturbance"
+      "Real-World Flight Tests"
     ]
   },
   {
-    "objectID": "pages/external-disturbance.html#wind-robustness-of-detector-parameters",
-    "href": "pages/external-disturbance.html#wind-robustness-of-detector-parameters",
-    "title": "Impact of External Disturbance",
-    "section": "Wind Robustness of Detector Parameters",
-    "text": "Wind Robustness of Detector Parameters\n\nSimulation Setup\nWe use Gazebo to simulate wind at different intensities. Gazebo models wind as a velocity vector drawn from a normal distribution: total wind speed \\(v_{wind} \\sim \\mathcal{N}(\\mu_w, \\sigma_w^2)\\) and direction \\(\\mathbf{w}_d \\sim \\mathcal{N}(\\mu_d, \\sigma_d^2)\\). The default configuration uses \\(\\mu_w = 4.0\\) m/s with no variance. We set \\(\\sigma_w = 6.0\\) m/s to simulate the disturbance in wind gust, and we injected east-axis wind with \\(\\mu_w' = 4.0/10.0/15.0\\) m/s for wind speeds of 4 m/s, 10 m/s, and 15 m/s.\n\n\nParameter Generalization\nWe test whether detector parameters selected under default wind conditions generalize to stronger winds. The figures below show \\(\\tau_{min}\\) (minimum threshold for zero false alarms) across different mean shifts and wind settings.\n\n\n\nτ_min curves for gyroscope detectors in the wavelet-based recovery module under different wind settings\n\n\n\n\n\nτ_min curves for detectors in the fault isolation module under different wind settings\n\n\nIn both detector modules, the optimal detection thresholds exceed all \\(\\tau_{min}\\) values even at stronger wind speeds, indicating a 0% false positive rate across all wind conditions. The selected parameters generalize well — no recalibration is needed when wind intensity changes.",
+    "objectID": "pages/real-world-flights.html#vulnerability-of-vanilla-ardupilot",
+    "href": "pages/real-world-flights.html#vulnerability-of-vanilla-ardupilot",
+    "title": "Real-World Flight Tests",
+    "section": "Vulnerability of Vanilla ArduPilot",
+    "text": "Vulnerability of Vanilla ArduPilot\nWe also demonstrate the inefficacy of vanilla ArduPilot (“ArduPilot,” n.d.) against the same attack setting on the F330 quadcopter. ArduPilot is considered less susceptible than PX4 as it enables low-pass filters in sensor hardware, implements a sophisticated dynamic notch filter, and applies stricter thresholds in its fail-safe logic (Kim et al. 2024). Despite these measures, the drone with vanilla ArduPilot rapidly oscillates and crashes within five seconds, indicating that vanilla ArduPilot alone is insufficient to mitigate the real-world acoustic injection attack.\n\n\nF330 Remote Attack → Crash (0.20 rad/s)\n\n\n\nArduPilot Rapid Crash (5s)",
     "crumbs": [
       "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Supplemental Results",
-      "Impact of External Disturbance"
+      "Real-World Flight Tests"
     ]
-  },
-  {
-    "objectID": "pages/external-disturbance.html#detection-and-recovery-under-wind",
-    "href": "pages/external-disturbance.html#detection-and-recovery-under-wind",
-    "title": "Impact of External Disturbance",
-    "section": "Detection and Recovery Under Wind",
-    "text": "Detection and Recovery Under Wind\nWe further examine how wind affects time to detection and recovery duration during an active acoustic attack (\\(G_i = 4.0\\) rad/s, \\(f_i = 20\\) Hz). The detector successfully identifies the attack in all flights regardless of wind speed.\n\n\n\nTime to detection at different wind speeds. Vertical bars show average TTD\n\n\nThe TTD remains stable across wind speeds, confirming that external disturbances do not significantly delay attack detection.\nThe average effective recovery duration stays above 300 seconds as wind speeds rise from 4.0 m/s to 10.0 m/s (330.5 s vs. 319.4 s across 10 flights). At 15.0 m/s, the drone failed to hold position against strong winds, reducing the recovery duration to 22.0 s. Still, WARA maintained flight attitude and avoided the imminent crash from the acoustic attack.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Supplemental Results",
-      "Impact of External Disturbance"
-    ]
-  },
-  {
-    "objectID": "pages/external-disturbance.html#other-noise-sources",
-    "href": "pages/external-disturbance.html#other-noise-sources",
-    "title": "Impact of External Disturbance",
-    "section": "Other Noise Sources",
-    "text": "Other Noise Sources\nBeyond wind, sensor measurements are also affected by mechanical vibration, electrical noise, and other persistent sources. Because these noise sources remain stable over the long term and are already present in attack-free flight data, they are accounted for in the mean shift \\(b_j\\). WARA detects attacks by identifying amplitudes that exceed the baseline established during attack-free flight, so these persistent noise sources do not significantly impact detection performance.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Supplemental Results",
-      "Impact of External Disturbance"
-    ]
-  },
-  {
-    "objectID": "pages/attack-device.html",
-    "href": "pages/attack-device.html",
-    "title": "Attack Device Design",
-    "section": "",
-    "text": "We designed a low-cost ($28) acoustic injection attack device capable of simultaneously targeting multiple heterogeneous IMUs (Son et al. 2015; Trippel et al. 2017; Tu et al. 2018; Jeong et al. 2023) on a drone — including both gyroscopes and accelerometers. To our knowledge, this is the first work to report simultaneous acoustic injection attacks at different frequencies against multiple IMUs. The compact unit (\\(9 \\times 7\\ \\text{cm}^2\\)) supports two complementary attack modes: remote attacks via ultrasonic emitters, and touch-based attacks via piezoelectric transducer (PZT) discs mounted directly on the flight controller.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Attack Device Design"
-    ]
-  },
-  {
-    "objectID": "pages/attack-device.html#overview",
-    "href": "pages/attack-device.html#overview",
-    "title": "Attack Device Design",
-    "section": "",
-    "text": "We designed a low-cost ($28) acoustic injection attack device capable of simultaneously targeting multiple heterogeneous IMUs (Son et al. 2015; Trippel et al. 2017; Tu et al. 2018; Jeong et al. 2023) on a drone — including both gyroscopes and accelerometers. To our knowledge, this is the first work to report simultaneous acoustic injection attacks at different frequencies against multiple IMUs. The compact unit (\\(9 \\times 7\\ \\text{cm}^2\\)) supports two complementary attack modes: remote attacks via ultrasonic emitters, and touch-based attacks via piezoelectric transducer (PZT) discs mounted directly on the flight controller.",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Attack Device Design"
-    ]
-  },
-  {
-    "objectID": "pages/attack-device.html#hardware",
-    "href": "pages/attack-device.html#hardware",
-    "title": "Attack Device Design",
-    "section": "Hardware",
-    "text": "Hardware\n\n\n\nWiring diagram of the attack device\n\n\nThe attack device uses a Raspberry Pi Zero 2W as the microcontroller, which controls an L298N motor driver module to generate multiple PWM signals. Compared to prior work that relies on a digital-to-analog converter and power amplifier chain (Gao et al. 2024), we introduce a DC-DC boost converter (MT3608, stepping 5V up to 20V) to drive the transducers more efficiently. A mini power bank (5V/2A) powers the entire unit.\nThe device supports two transducer types, each serving a distinct role:\n\nUltrasonic emitters — for remote attacks at a distance. These are the core attack scenario, enabling multi-IMU simultaneous injection without physical contact.\nPZT discs — for touch-based attacks attached directly to the flight controller. These achieve stronger amplitudes and can penetrate the physical shielding found on commercial IMUs. For instance, the CUAV V5+ board encases its IMU sensors in a thick metal block that effectively reduces remote attack amplitudes. Touch-based PZT attacks significantly weaken this protection, allowing us to evaluate WARA’s recovery robustness across a broader range of IMU models.\n\nBy adjusting pulse-width and frequency, the microcontroller independently controls the amplitude and frequency of the acoustic signal on each PWM channel. Generally, this device achieves remote attack amplitudes ranging from 0.2 to 2.0 rad/s on each targeted IMU — broader coverage than prior work (Jeong et al. 2023; Gao et al. 2024).",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Attack Device Design"
-    ]
-  },
-  {
-    "objectID": "pages/attack-device.html#remote-attack-in-lab-setting",
-    "href": "pages/attack-device.html#remote-attack-in-lab-setting",
-    "title": "Attack Device Design",
-    "section": "Remote Attack in Lab Setting",
-    "text": "Remote Attack in Lab Setting\nWe demonstrated remote multi-IMU attacks in a laboratory setting. Commercial flight controllers typically equip multiple heterogeneous IMUs for redundancy, and each IMU model has a distinct resonance frequency band. Because these bands rarely overlap, an attacker cannot compromise all IMUs with a single acoustic frequency — hence the need for simultaneous multi-frequency injection.\nFor each target IMU, we assemble a dedicated \\(2 \\times 2\\) ultrasonic emitter array placed 25 cm from the flight controller. Each array emits acoustic signals tuned to the resonance frequency band of its target IMU. During evaluation, the drone motors were armed to assess the impact of motor noise on attack effectiveness.\n\n\nMulti-IMU Remote Attack Demonstration (Lab)",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Attack Device Design"
-    ]
-  },
-  {
-    "objectID": "pages/attack-device.html#from-emitter-arrays-to-closer-range-attacks",
-    "href": "pages/attack-device.html#from-emitter-arrays-to-closer-range-attacks",
-    "title": "Attack Device Design",
-    "section": "From Emitter Arrays to Closer-Range Attacks",
-    "text": "From Emitter Arrays to Closer-Range Attacks\nInterestingly, we observed that a single ultrasonic emitter at 7 cm can achieve similar attack amplitudes as a full \\(2 \\times 2\\) array at 25 cm. Inspired by this, we developed closer-range attacks at just 1 cm to further increase attack intensity. This compact setup — a single emitter placed near the IMU — can be deployed directly on the drone for real-world flight tests, achieving attack amplitudes up to ~2.2 rad/s on the BMI055 IMU.\nAlthough our prototype is limited to short range, long-range attacks remain viable with high-power hardware (e.g., a Genasys LRAD 1950XL (Genasys 2025) could achieve equivalent intensity at over 12 meters (Son et al. 2015)).",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Attack Device Design"
-    ]
-  },
-  {
-    "objectID": "pages/attack-device.html#transducer-layout-on-flight-controllers",
-    "href": "pages/attack-device.html#transducer-layout-on-flight-controllers",
-    "title": "Attack Device Design",
-    "section": "Transducer Layout on Flight Controllers",
-    "text": "Transducer Layout on Flight Controllers\nTransducers are positioned directly above each target IMU. IMU locations are determined from public board schematics or through trial-and-error on an identical board.\n\n\n\n\nCUAV V5+\n\n\n\n\n\nPixhawk 6C Mini\n\n\n\n\n\nMounted on F330 quadcopter",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Attack Device Design"
-    ]
-  },
-  {
-    "objectID": "pages/attack-device.html#real-world-flight-tests",
-    "href": "pages/attack-device.html#real-world-flight-tests",
-    "title": "Attack Device Design",
-    "section": "Real-World Flight Tests",
-    "text": "Real-World Flight Tests\nThe attack device was deployed on an F330 quadcopter for real-world flight testing. Even at low amplitudes (~0.20 rad/s), remote attacks can cause an unprotected drone to crash.\n\n\nF330 Remote Attack → Crash (Real-World, 0.20 rad/s)\n\n\n\nF330 Dual-IMU Attack on Vanilla ArduPilot (No WARA)",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Attack Device Design"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-    "section": "",
-    "text": "Yunbo Wang · Cong Sun✉ · Qiaosen Liu\nXidian University · Xi’an, Shaanxi, China\n✉ Corresponding author: suncong@xidian.edu.cn",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#featured-videos",
-    "href": "index.html#featured-videos",
-    "title": "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-    "section": "Featured Videos",
-    "text": "Featured Videos\n\n\nAttack: Multi-IMU Remote Attack (Lab)\n\n\n\nAttack: F330 Dual-IMU Attack on Vanilla ArduPilot\n\n\n\nRecovery: F330 Real Attack Recovery with WARA\n\n\n\nRecovery: ZD550 Real Attack Recovery with WARA",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#cite-this-paper",
-    "href": "index.html#cite-this-paper",
-    "title": "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-    "section": "Cite This Paper",
-    "text": "Cite This Paper\n@inproceedings{wang2026wara,\n  title     = {{WARA}: Wavelet-based Realtime Recovery against\n               Acoustic Injection Attacks on {UAV}},\n  author    = {Yunbo Wang and Cong Sun and Qiaosen Liu},\n  booktitle = {To appear},\n  year      = {2026},\n  note      = {Preprint available on request}\n}",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Home"
-    ]
-  },
-  {
-    "objectID": "pages/advanced-attack.html",
-    "href": "pages/advanced-attack.html",
-    "title": "Advanced Attack Waveforms",
-    "section": "",
-    "text": "In conventional acoustic attacks, the oscillating induced signal contributes roughly the same amount to inertial measurements in both directions, limiting the accumulated error. To develop more capable attacks, prior work has introduced two signal modulation techniques (Tu et al. 2018):\n\nSide-swing attack — The adversary increases the amplitude when the induced signal is in the target direction and decreases it otherwise, producing a net directional bias.\nSwitch attack — The attacker switches the acoustic frequency to keep the induced signal consistently in the same direction.\n\nBoth attacks induce low-frequency distortion in the target direction, allowing the adversary to not only disrupt sensor readings but also deliver implicit control and manipulate drone motion. These are substantially more dangerous than unmodulated acoustic injections."
-  },
-  {
-    "objectID": "pages/advanced-attack.html#side-swing-and-switch-attacks",
-    "href": "pages/advanced-attack.html#side-swing-and-switch-attacks",
-    "title": "Advanced Attack Waveforms",
-    "section": "",
-    "text": "In conventional acoustic attacks, the oscillating induced signal contributes roughly the same amount to inertial measurements in both directions, limiting the accumulated error. To develop more capable attacks, prior work has introduced two signal modulation techniques (Tu et al. 2018):\n\nSide-swing attack — The adversary increases the amplitude when the induced signal is in the target direction and decreases it otherwise, producing a net directional bias.\nSwitch attack — The attacker switches the acoustic frequency to keep the induced signal consistently in the same direction.\n\nBoth attacks induce low-frequency distortion in the target direction, allowing the adversary to not only disrupt sensor readings but also deliver implicit control and manipulate drone motion. These are substantially more dangerous than unmodulated acoustic injections."
-  },
-  {
-    "objectID": "pages/advanced-attack.html#evaluation-setup",
-    "href": "pages/advanced-attack.html#evaluation-setup",
-    "title": "Advanced Attack Waveforms",
-    "section": "Evaluation Setup",
-    "text": "Evaluation Setup\nWe evaluate WARA’s recovery performance against advanced attacks in SITL simulation. The primary IMU is targeted with either a side-swing or switch attack at an induced frequency \\(f_i = 1\\) Hz (Tu et al. 2018). The reserved IMUs are targeted with regular simulated attacks at \\(f_i = 20\\) Hz. All attacks use an amplitude of \\(G_i = 2.0\\) rad/s. WARA operates in multi-IMU mode to leverage the redundant IMUs for low-frequency interference removal."
-  },
-  {
-    "objectID": "pages/advanced-attack.html#wara-recovery-results",
-    "href": "pages/advanced-attack.html#wara-recovery-results",
-    "title": "Advanced Attack Waveforms",
-    "section": "WARA Recovery Results",
-    "text": "WARA Recovery Results\nThe advanced attacks inject strong low-frequency interference into the primary IMU measurements, causing significant deviations from the ground truth. WARA’s multi-IMU mode identifies the affected LF wavelet packets and replaces them with benign coefficients from a redundant — but also compromised — IMU instance.\n\n\n\n\nRecovered gyroscope measurements (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\n\n\nNoise amplitude spectra (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\nThe recovered measurements show substantially reduced interference in the attacked frequency bands, enabling the drone to maintain stability and complete its mission."
-  },
-  {
-    "objectID": "pages/advanced-attack.html#comparison-with-unrocker-and-single-imu-wara",
-    "href": "pages/advanced-attack.html#comparison-with-unrocker-and-single-imu-wara",
-    "title": "Advanced Attack Waveforms",
-    "section": "Comparison with UnRocker and Single-IMU WARA",
-    "text": "Comparison with UnRocker and Single-IMU WARA\nIn contrast, both UnRocker and WARA’s single-IMU mode are ineffective against these advanced attacks:\n\n\n\n\nRecovered gyroscope measurements: WARA vs UnRocker vs Single-IMU WARA (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\n\n\nNoise amplitude spectra comparison (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\nTheir recovered results deviate significantly from the ground truth, and the noise peaks in the 0–5 Hz band confirm that LF interference persists after their recovery processes. These results demonstrate that WARA’s multi-IMU mode is essential for removing low-frequency attack interference — single-IMU recovery and deep-learning denoising both fail when the attack energy is concentrated within the motion signal band."
-  },
-  {
-    "objectID": "pages/advanced-attack.html#limitations",
-    "href": "pages/advanced-attack.html#limitations",
-    "title": "Advanced Attack Waveforms",
-    "section": "Limitations",
-    "text": "Limitations\nWe investigated WARA’s boundaries by varying attack configurations. Increasing \\(G_i\\) on the primary IMU above 2.0 rad/s destabilizes the flight attitude, triggering a no position fail-safe due to a false alarm in the GNSS sensor. Simultaneously attacking all IMUs with side-swing or switch attacks results in a crash — these attacks all produce LF interference, creating overlapping distortion within the narrow motion signal band (0–5 Hz). However, simultaneously crafting multiple independent modulated signals into this band remains challenging, as discussed in the paper."
-  },
-  {
-    "objectID": "pages/advanced-attack.html#impact-on-closed-loop-control",
-    "href": "pages/advanced-attack.html#impact-on-closed-loop-control",
-    "title": "Advanced Attack Waveforms",
-    "section": "Impact on Closed-Loop Control",
-    "text": "Impact on Closed-Loop Control\nTo directly quantify recovery quality at the control level, we measure the mean attitude error across roll, pitch, and yaw axes. We conducted 10 SITL flights per configuration. The attitude error is the absolute deviation between the estimated Euler angles and the ground-truth states.\n\n\n\nMean attitude error under Switch Attack (\\(G_i = 2.0\\) rad/s)\n\n\nUnder attack-free conditions, WARA maintains a performance profile nearly identical to the vanilla PX4 autopilot, with errors consistently below 0.02 rad — confirming WARA introduces no functional degradation during routine operations.\nUnder the Switch Attack, the vanilla autopilot’s attitude error surges to 0.5–1.0 rad, a magnitude that triggers an immediate crash. In contrast, WARA suppresses the error to 0.05–0.10 rad across all axes. Although this remains higher than the benign state, it stays well within the autopilot’s compensation envelope — the drone maintains flight attitude and completes its mission."
   },
   {
     "objectID": "pages/detector-parameters.html",
@@ -336,6 +150,203 @@
       "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
       "WARA Defense",
       "Detector Parameter Selection"
+    ]
+  },
+  {
+    "objectID": "pages/advanced-attack.html",
+    "href": "pages/advanced-attack.html",
+    "title": "Advanced Attack Waveforms",
+    "section": "",
+    "text": "In conventional acoustic attacks, the oscillating induced signal contributes roughly the same amount to inertial measurements in both directions, limiting the accumulated error. To develop more capable attacks, prior work has introduced two signal modulation techniques (Tu et al. 2018):\n\nSide-swing attack — The adversary increases the amplitude when the induced signal is in the target direction and decreases it otherwise, producing a net directional bias.\nSwitch attack — The attacker switches the acoustic frequency to keep the induced signal consistently in the same direction.\n\nBoth attacks induce low-frequency distortion in the target direction, allowing the adversary to not only disrupt sensor readings but also deliver implicit control and manipulate drone motion. These are substantially more dangerous than unmodulated acoustic injections."
+  },
+  {
+    "objectID": "pages/advanced-attack.html#side-swing-and-switch-attacks",
+    "href": "pages/advanced-attack.html#side-swing-and-switch-attacks",
+    "title": "Advanced Attack Waveforms",
+    "section": "",
+    "text": "In conventional acoustic attacks, the oscillating induced signal contributes roughly the same amount to inertial measurements in both directions, limiting the accumulated error. To develop more capable attacks, prior work has introduced two signal modulation techniques (Tu et al. 2018):\n\nSide-swing attack — The adversary increases the amplitude when the induced signal is in the target direction and decreases it otherwise, producing a net directional bias.\nSwitch attack — The attacker switches the acoustic frequency to keep the induced signal consistently in the same direction.\n\nBoth attacks induce low-frequency distortion in the target direction, allowing the adversary to not only disrupt sensor readings but also deliver implicit control and manipulate drone motion. These are substantially more dangerous than unmodulated acoustic injections."
+  },
+  {
+    "objectID": "pages/advanced-attack.html#evaluation-setup",
+    "href": "pages/advanced-attack.html#evaluation-setup",
+    "title": "Advanced Attack Waveforms",
+    "section": "Evaluation Setup",
+    "text": "Evaluation Setup\nWe evaluate WARA’s recovery performance against advanced attacks in SITL simulation. The primary IMU is targeted with either a side-swing or switch attack at an induced frequency \\(f_i = 1\\) Hz (Tu et al. 2018). The reserved IMUs are targeted with regular simulated attacks at \\(f_i = 20\\) Hz. All attacks use an amplitude of \\(G_i = 2.0\\) rad/s. WARA operates in multi-IMU mode to leverage the redundant IMUs for low-frequency interference removal."
+  },
+  {
+    "objectID": "pages/advanced-attack.html#wara-recovery-results",
+    "href": "pages/advanced-attack.html#wara-recovery-results",
+    "title": "Advanced Attack Waveforms",
+    "section": "WARA Recovery Results",
+    "text": "WARA Recovery Results\nThe advanced attacks inject strong low-frequency interference into the primary IMU measurements, causing significant deviations from the ground truth. WARA’s multi-IMU mode identifies the affected LF wavelet packets and replaces them with benign coefficients from a redundant — but also compromised — IMU instance.\n\n\n\n\nRecovered gyroscope measurements (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\n\n\nNoise amplitude spectra (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\nThe recovered measurements show substantially reduced interference in the attacked frequency bands, enabling the drone to maintain stability and complete its mission."
+  },
+  {
+    "objectID": "pages/advanced-attack.html#comparison-with-unrocker-and-single-imu-wara",
+    "href": "pages/advanced-attack.html#comparison-with-unrocker-and-single-imu-wara",
+    "title": "Advanced Attack Waveforms",
+    "section": "Comparison with UnRocker and Single-IMU WARA",
+    "text": "Comparison with UnRocker and Single-IMU WARA\nIn contrast, both UnRocker and WARA’s single-IMU mode are ineffective against these advanced attacks:\n\n\n\n\nRecovered gyroscope measurements: WARA vs UnRocker vs Single-IMU WARA (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\n\n\nNoise amplitude spectra comparison (SITL, \\(G_i = 2.0\\) rad/s, \\(f_i = 1\\) Hz)\n\n\n\nTheir recovered results deviate significantly from the ground truth, and the noise peaks in the 0–5 Hz band confirm that LF interference persists after their recovery processes. These results demonstrate that WARA’s multi-IMU mode is essential for removing low-frequency attack interference — single-IMU recovery and deep-learning denoising both fail when the attack energy is concentrated within the motion signal band."
+  },
+  {
+    "objectID": "pages/advanced-attack.html#limitations",
+    "href": "pages/advanced-attack.html#limitations",
+    "title": "Advanced Attack Waveforms",
+    "section": "Limitations",
+    "text": "Limitations\nWe investigated WARA’s boundaries by varying attack configurations. Increasing \\(G_i\\) on the primary IMU above 2.0 rad/s destabilizes the flight attitude, triggering a no position fail-safe due to a false alarm in the GNSS sensor. Simultaneously attacking all IMUs with side-swing or switch attacks results in a crash — these attacks all produce LF interference, creating overlapping distortion within the narrow motion signal band (0–5 Hz). However, simultaneously crafting multiple independent modulated signals into this band remains challenging, as discussed in the paper."
+  },
+  {
+    "objectID": "pages/advanced-attack.html#impact-on-closed-loop-control",
+    "href": "pages/advanced-attack.html#impact-on-closed-loop-control",
+    "title": "Advanced Attack Waveforms",
+    "section": "Impact on Closed-Loop Control",
+    "text": "Impact on Closed-Loop Control\nTo directly quantify recovery quality at the control level, we measure the mean attitude error across roll, pitch, and yaw axes. We conducted 10 SITL flights per configuration. The attitude error is the absolute deviation between the estimated Euler angles and the ground-truth states.\n\n\n\nMean attitude error under Switch Attack (\\(G_i = 2.0\\) rad/s)\n\n\nUnder attack-free conditions, WARA maintains a performance profile nearly identical to the vanilla PX4 autopilot, with errors consistently below 0.02 rad — confirming WARA introduces no functional degradation during routine operations.\nUnder the Switch Attack, the vanilla autopilot’s attitude error surges to 0.5–1.0 rad, a magnitude that triggers an immediate crash. In contrast, WARA suppresses the error to 0.05–0.10 rad across all axes. Although this remains higher than the benign state, it stays well within the autopilot’s compensation envelope — the drone maintains flight attitude and completes its mission."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+    "section": "",
+    "text": "Yunbo Wang · Cong Sun✉ · Qiaosen Liu\nXidian University · Xi’an, Shaanxi, China\n✉ Corresponding author: suncong@xidian.edu.cn",
+    "crumbs": [
+      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#featured-videos",
+    "href": "index.html#featured-videos",
+    "title": "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+    "section": "Featured Videos",
+    "text": "Featured Videos\n\n\nAttack: Multi-IMU Remote Attack (Lab)\n\n\n\nAttack: F330 Dual-IMU Attack on Vanilla ArduPilot\n\n\n\nRecovery: F330 Real Attack Recovery with WARA\n\n\n\nRecovery: ZD550 Real Attack Recovery with WARA",
+    "crumbs": [
+      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#cite-this-paper",
+    "href": "index.html#cite-this-paper",
+    "title": "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+    "section": "Cite This Paper",
+    "text": "Cite This Paper\n@inproceedings{wang2026wara,\n  title     = {{WARA}: Wavelet-based Realtime Recovery against\n               Acoustic Injection Attacks on {UAV}},\n  author    = {Yunbo Wang and Cong Sun and Qiaosen Liu},\n  booktitle = {To appear},\n  year      = {2026},\n  note      = {Preprint available on request}\n}",
+    "crumbs": [
+      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+      "Home"
+    ]
+  },
+  {
+    "objectID": "pages/attack-device.html",
+    "href": "pages/attack-device.html",
+    "title": "Attack Device Design",
+    "section": "",
+    "text": "We designed a low-cost ($28) acoustic injection attack device capable of simultaneously targeting multiple heterogeneous IMUs (Son et al. 2015; Trippel et al. 2017; Tu et al. 2018; Jeong et al. 2023) on a drone — including both gyroscopes and accelerometers. To our knowledge, this is the first work to report simultaneous acoustic injection attacks at different frequencies against multiple IMUs. The compact unit (\\(9 \\times 7\\ \\text{cm}^2\\)) supports two complementary attack modes: remote attacks via ultrasonic emitters, and touch-based attacks via piezoelectric transducer (PZT) discs mounted directly on the flight controller.",
+    "crumbs": [
+      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+      "Attack Device Design"
+    ]
+  },
+  {
+    "objectID": "pages/attack-device.html#overview",
+    "href": "pages/attack-device.html#overview",
+    "title": "Attack Device Design",
+    "section": "",
+    "text": "We designed a low-cost ($28) acoustic injection attack device capable of simultaneously targeting multiple heterogeneous IMUs (Son et al. 2015; Trippel et al. 2017; Tu et al. 2018; Jeong et al. 2023) on a drone — including both gyroscopes and accelerometers. To our knowledge, this is the first work to report simultaneous acoustic injection attacks at different frequencies against multiple IMUs. The compact unit (\\(9 \\times 7\\ \\text{cm}^2\\)) supports two complementary attack modes: remote attacks via ultrasonic emitters, and touch-based attacks via piezoelectric transducer (PZT) discs mounted directly on the flight controller.",
+    "crumbs": [
+      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+      "Attack Device Design"
+    ]
+  },
+  {
+    "objectID": "pages/attack-device.html#hardware",
+    "href": "pages/attack-device.html#hardware",
+    "title": "Attack Device Design",
+    "section": "Hardware",
+    "text": "Hardware\n\n\n\nWiring diagram of the attack device\n\n\nThe attack device uses a Raspberry Pi Zero 2W as the microcontroller, which controls an L298N motor driver module to generate multiple PWM signals. Compared to prior work that relies on a digital-to-analog converter and power amplifier chain (Gao et al. 2024), we introduce a DC-DC boost converter (MT3608, stepping 5V up to 20V) to drive the transducers more efficiently. A mini power bank (5V/2A) powers the entire unit.\nThe device supports two transducer types, each serving a distinct role:\n\nUltrasonic emitters — for remote attacks at a distance. These are the core attack scenario, enabling multi-IMU simultaneous injection without physical contact.\nPZT discs — for touch-based attacks attached directly to the flight controller. These achieve stronger amplitudes and can penetrate the physical shielding found on commercial IMUs. For instance, the CUAV V5+ board encases its IMU sensors in a thick metal block that effectively reduces remote attack amplitudes. Touch-based PZT attacks significantly weaken this protection, allowing us to evaluate WARA’s recovery robustness across a broader range of IMU models.\n\nBy adjusting pulse-width and frequency, the microcontroller independently controls the amplitude and frequency of the acoustic signal on each PWM channel. Generally, this device achieves remote attack amplitudes ranging from 0.2 to 2.0 rad/s on each targeted IMU — broader coverage than prior work (Jeong et al. 2023; Gao et al. 2024).",
+    "crumbs": [
+      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+      "Attack Device Design"
+    ]
+  },
+  {
+    "objectID": "pages/attack-device.html#remote-attack-from-lab-to-real-world",
+    "href": "pages/attack-device.html#remote-attack-from-lab-to-real-world",
+    "title": "Attack Device Design",
+    "section": "Remote Attack: From Lab to Real-World",
+    "text": "Remote Attack: From Lab to Real-World\nWe demonstrated remote multi-IMU attacks in a laboratory setting. Commercial flight controllers typically equip multiple heterogeneous IMUs for redundancy, and each IMU model has a distinct resonance frequency band. Because these bands rarely overlap, an attacker cannot compromise all IMUs with a single acoustic frequency — hence the need for simultaneous multi-frequency injection.\nFor each target IMU, we assemble a dedicated \\(2 \\times 2\\) ultrasonic emitter array placed 25 cm from the flight controller. Each array emits acoustic signals tuned to the resonance frequency band of its target IMU. During evaluation, the drone motors were armed to assess the impact of motor noise on attack effectiveness.\nThe multi-IMU acoustic attacks generated with our attack unit can effectively overwhelm the IMU redundancy mechanisms. We inject remote acoustic attack signals simultaneously at different frequencies, each matching the resonance band of a target IMU. We examine inter-signal interference by injecting the attack waves from the same orientation to the FC board. Our emitter arrays can conduct effective remote multi-IMU attacks from several orientations.\nCompared to the \\(2 \\times 2\\) array, a single emitter can achieve similar amplitudes at 7 cm. Reducing this distance further to 1 cm increases the attack amplitude to approximately 2.2 rad/s on a BMI055 IMU, enabling the onboard attack unit deployment used in our real-world flight tests (detailed on the Real-World Flight Tests page).\nTo illustrate that the attack amplitudes of around 0.20 rad/s on ICM-42688P and MPU-6000 are effective, our real flight tests demonstrate that such amplitudes can cause a drone to crash if the induced frequency falls within the motion signal band.\nNote that the ground truth collection in real flight tests differs from the collection in the laboratory. In real flights, the drone takes another attack-free FC board to ensure flight safety and provide attack-free ground truths. We record the drone’s motion signals with the IMUs on this attack-free board as the ground truth. We calculate the error between compromised and ground-truth measurements, and the largest error defines the maximum attack amplitude.\nThe lab video demonstrates simultaneous multi-IMU injection in a controlled setting; the flight video shows that even moderate amplitudes (~0.20 rad/s) cause a real drone to crash.\n\n\nMulti-IMU Remote Attack Demonstration (Lab)\n\n\n\nF330 Remote Attack → Crash (Real-World, 0.20 rad/s)\n\n\n\nAlthough our prototype is limited to short range, long-range attacks remain viable with high-power hardware (e.g., a Genasys LRAD 1950XL (Genasys 2025) could achieve equivalent intensity at over 12 meters (Son et al. 2015)).",
+    "crumbs": [
+      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+      "Attack Device Design"
+    ]
+  },
+  {
+    "objectID": "pages/attack-device.html#transducer-layout-on-flight-controllers",
+    "href": "pages/attack-device.html#transducer-layout-on-flight-controllers",
+    "title": "Attack Device Design",
+    "section": "Transducer Layout on Flight Controllers",
+    "text": "Transducer Layout on Flight Controllers\nTransducers are positioned directly above each target IMU. IMU locations are determined from public board schematics or through trial-and-error on an identical board.\n\n\n\n\nCUAV V5+\n\n\n\n\n\nPixhawk 6C Mini\n\n\n\n\n\nMounted on F330 quadcopter",
+    "crumbs": [
+      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+      "Attack Device Design"
+    ]
+  },
+  {
+    "objectID": "pages/external-disturbance.html",
+    "href": "pages/external-disturbance.html",
+    "title": "Impact of External Disturbance",
+    "section": "",
+    "text": "External disturbances such as wind gusts affect drone state estimation in various ways (Tomic et al. 2020). However, these disturbances typically induce consistent motion across all redundant IMUs on the flight controller board. This consistency supports WARA’s approach: redundant IMUs experience the same benign disturbances, allowing the detectors to distinguish between external forces (common to all IMUs) and acoustic attack interference (isolated to specific IMUs).",
+    "crumbs": [
+      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+      "Supplemental Results",
+      "Impact of External Disturbance"
+    ]
+  },
+  {
+    "objectID": "pages/external-disturbance.html#overview",
+    "href": "pages/external-disturbance.html#overview",
+    "title": "Impact of External Disturbance",
+    "section": "",
+    "text": "External disturbances such as wind gusts affect drone state estimation in various ways (Tomic et al. 2020). However, these disturbances typically induce consistent motion across all redundant IMUs on the flight controller board. This consistency supports WARA’s approach: redundant IMUs experience the same benign disturbances, allowing the detectors to distinguish between external forces (common to all IMUs) and acoustic attack interference (isolated to specific IMUs).",
+    "crumbs": [
+      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+      "Supplemental Results",
+      "Impact of External Disturbance"
+    ]
+  },
+  {
+    "objectID": "pages/external-disturbance.html#wind-robustness-of-detector-parameters",
+    "href": "pages/external-disturbance.html#wind-robustness-of-detector-parameters",
+    "title": "Impact of External Disturbance",
+    "section": "Wind Robustness of Detector Parameters",
+    "text": "Wind Robustness of Detector Parameters\n\nSimulation Setup\nWe use Gazebo to simulate wind at different intensities. Gazebo models wind as a velocity vector drawn from a normal distribution: total wind speed \\(v_{wind} \\sim \\mathcal{N}(\\mu_w, \\sigma_w^2)\\) and direction \\(\\mathbf{w}_d \\sim \\mathcal{N}(\\mu_d, \\sigma_d^2)\\). The default configuration uses \\(\\mu_w = 4.0\\) m/s with no variance. We set \\(\\sigma_w = 6.0\\) m/s to simulate the disturbance in wind gust, and we injected east-axis wind with \\(\\mu_w' = 4.0/10.0/15.0\\) m/s for wind speeds of 4 m/s, 10 m/s, and 15 m/s.\n\n\nParameter Generalization\nWe test whether detector parameters selected under default wind conditions generalize to stronger winds. The figures below show \\(\\tau_{min}\\) (minimum threshold for zero false alarms) across different mean shifts and wind settings.\n\n\n\nτ_min curves for gyroscope detectors in the wavelet-based recovery module under different wind settings\n\n\n\n\n\nτ_min curves for detectors in the fault isolation module under different wind settings\n\n\nIn both detector modules, the optimal detection thresholds exceed all \\(\\tau_{min}\\) values even at stronger wind speeds, indicating a 0% false positive rate across all wind conditions. The selected parameters generalize well — no recalibration is needed when wind intensity changes.",
+    "crumbs": [
+      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+      "Supplemental Results",
+      "Impact of External Disturbance"
+    ]
+  },
+  {
+    "objectID": "pages/external-disturbance.html#detection-and-recovery-under-wind",
+    "href": "pages/external-disturbance.html#detection-and-recovery-under-wind",
+    "title": "Impact of External Disturbance",
+    "section": "Detection and Recovery Under Wind",
+    "text": "Detection and Recovery Under Wind\nWe further examine how wind affects time to detection and recovery duration during an active acoustic attack (\\(G_i = 4.0\\) rad/s, \\(f_i = 20\\) Hz). The detector successfully identifies the attack in all flights regardless of wind speed.\n\n\n\nTime to detection at different wind speeds. Vertical bars show average TTD\n\n\nThe TTD remains stable across wind speeds, confirming that external disturbances do not significantly delay attack detection.\nThe average effective recovery duration stays above 300 seconds as wind speeds rise from 4.0 m/s to 10.0 m/s (330.5 s vs. 319.4 s across 10 flights). At 15.0 m/s, the drone failed to hold position against strong winds, reducing the recovery duration to 22.0 s. Still, WARA maintained flight attitude and avoided the imminent crash from the acoustic attack.",
+    "crumbs": [
+      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+      "Supplemental Results",
+      "Impact of External Disturbance"
+    ]
+  },
+  {
+    "objectID": "pages/external-disturbance.html#other-noise-sources",
+    "href": "pages/external-disturbance.html#other-noise-sources",
+    "title": "Impact of External Disturbance",
+    "section": "Other Noise Sources",
+    "text": "Other Noise Sources\nBeyond wind, sensor measurements are also affected by mechanical vibration, electrical noise, and other persistent sources. Because these noise sources remain stable over the long term and are already present in attack-free flight data, they are accounted for in the mean shift \\(b_j\\). WARA detects attacks by identifying amplitudes that exceed the baseline established during attack-free flight, so these persistent noise sources do not significantly impact detection performance.",
+    "crumbs": [
+      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
+      "Supplemental Results",
+      "Impact of External Disturbance"
     ]
   },
   {

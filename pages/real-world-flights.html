@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Wavelet-based Recovery Design – WARA</title>
+<title>Real-World Flight Tests – WARA</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -52,8 +52,8 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../pages/detector-parameters.html" rel="next">
-<link href="../pages/attack-device.html" rel="prev">
+<link href="../pages/recovery-effectiveness.html" rel="next">
+<link href="../pages/detector-parameters.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -64,9 +64,6 @@ div.csl-indent {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-478590c5df418e4fa0b07ad45f1ae6f8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -171,7 +168,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../pages/wavelet-partition.html">WARA Defense</a></li><li class="breadcrumb-item"><a href="../pages/wavelet-partition.html">Wavelet-based Recovery Design</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../pages/real-world-flights.html">Real-World Flight Tests</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -197,16 +194,16 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
  <span class="menu-text">WARA Defense</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../pages/wavelet-partition.html" class="sidebar-item-text sidebar-link active">
+  <a href="../pages/wavelet-partition.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Wavelet-based Recovery Design</span></a>
   </div>
 </li>
@@ -220,7 +217,7 @@ window.Quarto = {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../pages/real-world-flights.html" class="sidebar-item-text sidebar-link">
+  <a href="../pages/real-world-flights.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Real-World Flight Tests</span></a>
   </div>
 </li>
@@ -253,20 +250,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#the-mallat-algorithm" id="toc-the-mallat-algorithm" class="nav-link" data-scroll-target="#the-mallat-algorithm">The Mallat Algorithm</a></li>
-  <li><a href="#online-wpd-with-buffer-mechanism" id="toc-online-wpd-with-buffer-mechanism" class="nav-link" data-scroll-target="#online-wpd-with-buffer-mechanism">Online WPD with Buffer Mechanism</a>
-  <ul class="collapse">
-  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
-  <li><a href="#buffer-size-derivation" id="toc-buffer-size-derivation" class="nav-link" data-scroll-target="#buffer-size-derivation">Buffer Size Derivation</a></li>
-  <li><a href="#buffer-design" id="toc-buffer-design" class="nav-link" data-scroll-target="#buffer-design">Buffer Design</a></li>
-  <li><a href="#three-procedures" id="toc-three-procedures" class="nav-link" data-scroll-target="#three-procedures">Three Procedures</a></li>
-  </ul></li>
-  <li><a href="#wpt-partition" id="toc-wpt-partition" class="nav-link" data-scroll-target="#wpt-partition">WPT Partition</a>
-  <ul class="collapse">
-  <li><a href="#frequency-band-allocation" id="toc-frequency-band-allocation" class="nav-link" data-scroll-target="#frequency-band-allocation">Frequency Band Allocation</a></li>
-  <li><a href="#single-imu-vs.-multi-imu-mode" id="toc-single-imu-vs.-multi-imu-mode" class="nav-link" data-scroll-target="#single-imu-vs.-multi-imu-mode">Single-IMU vs.&nbsp;Multi-IMU Mode</a></li>
-  </ul></li>
+  <li><a href="#wara-recovery-in-real-world-flights" id="toc-wara-recovery-in-real-world-flights" class="nav-link active" data-scroll-target="#wara-recovery-in-real-world-flights">WARA Recovery in Real-World Flights</a></li>
+  <li><a href="#vulnerability-of-vanilla-ardupilot" id="toc-vulnerability-of-vanilla-ardupilot" class="nav-link" data-scroll-target="#vulnerability-of-vanilla-ardupilot">Vulnerability of Vanilla ArduPilot</a></li>
   </ul>
 </nav>
 </nav>
@@ -277,9 +262,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../pages/wavelet-partition.html">WARA Defense</a></li><li class="breadcrumb-item"><a href="../pages/wavelet-partition.html">Wavelet-based Recovery Design</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Wavelet-based Recovery Design</h1>
+<h1 class="title">Real-World Flight Tests</h1>
 </div>
 
 
@@ -296,155 +281,53 @@ window.Quarto = {
 </header>
 
 
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>WARA uses <strong>wavelet packet decomposition</strong> (WPD) to separate acoustic attack interference from benign sensor signals. Unlike classical wavelet transforms that only decompose low-frequency components, WPD decomposes <em>both</em> low- and high-frequency bands recursively, producing a full binary tree of sub-bands. This allows WARA to isolate attack interference localized in specific frequency bands while preserving the drone’s motion signal.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../figures/WPT-Tree-Structure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="3-Level Wavelet Packet Decomposition"><img src="../figures/WPT-Tree-Structure.png" class="img-fluid figure-img" style="width:90.0%" alt="3-Level Wavelet Packet Decomposition"></a></p>
-<figcaption>3-Level Wavelet Packet Decomposition</figcaption>
-</figure>
+<section id="wara-recovery-in-real-world-flights" class="level2">
+<h2 class="anchored" data-anchor-id="wara-recovery-in-real-world-flights">WARA Recovery in Real-World Flights</h2>
+<p>We demonstrate WARA’s recovery performance by performing acoustic injection attacks on two real-world quadcopters (ZD550 and F330). During these tests, the drones take off from their home and hover at a preset altitude. Then, using our attack device, we initiate the acoustic injection attacks to disrupt gyroscope measurements.</p>
+<p>Due to physical shielding, our attack unit achieves only a 0.20 rad/s amplitude in the touch-based attack on the CUAV V5+ board. Hence, we further test WARA’s recovery performance on the ZD550 using a simulated attack with <span class="math inline">\(G_i = 0.60\)</span> rad/s, whose amplitude matches that of the attack in the real-world test reported in <span class="citation" data-cites="wang2024vimu">(<a href="#ref-wang2024vimu" role="doc-biblioref">Wang et al. 2024</a>)</span>.</p>
+<p>With WARA’s detection and recovery, all drones avoid immediate crash and maintain stable flight for an extended duration until they land due to low battery. In particular, the F330 drone flies for <strong>4.5 minutes</strong> under the remote attack, while the ZD550 drone sustains flight for <strong>2 minutes</strong> (under the real-world touch-based attack) and <strong>3.5 minutes</strong> (under simulated attack). These results consistently surpass the recovery duration of VIMU (26.1 seconds) reported in <span class="citation" data-cites="wang2024vimu">(<a href="#ref-wang2024vimu" role="doc-biblioref">Wang et al. 2024</a>)</span>.</p>
+<div class="video-grid-3">
+<div class="video-card">
+<p><strong>F330 Real Attack Recovery (4.5 min)</strong></p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/9KQJXdmpxQ0" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</div>
+<div class="video-card">
+<p><strong>ZD550 Real-World Attack Recovery (2 min)</strong></p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/c-nOE6so44M" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</div>
+<div class="video-card">
+<p><strong>ZD550 Simulated Attack Recovery (3.5 min)</strong></p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/beH2WQqdEng" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</div>
 </div>
 </section>
-<section id="the-mallat-algorithm" class="level2">
-<h2 class="anchored" data-anchor-id="the-mallat-algorithm">The Mallat Algorithm</h2>
-<p>WPD is implemented via the <strong>Mallat algorithm</strong>, which performs fast level-wise transformations using a pair of low-pass (<span class="math inline">\(h[\cdot]\)</span>) and high-pass (<span class="math inline">\(g[\cdot]\)</span>) filter banks. Given an input sequence <span class="math inline">\(x[\cdot]\)</span> of length <span class="math inline">\(N\)</span> and filter length <span class="math inline">\(F\)</span>, the decomposition produces two sequences of wavelet coefficients:</p>
-<p><span class="math display">\[w_{a}[k] = \sum^F_{i=0}x[2k-i]h[i];\quad w_{d}[k] = \sum^F_{i=0}x[2k-i]g[i]\]</span></p>
-<p>where <span class="math inline">\(k=0,1,...,\frac{N}{2}-1\)</span>, and <span class="math inline">\(w_{a}[k]\)</span> and <span class="math inline">\(w_{d}[k]\)</span> are the <em>approximate</em> and <em>detail</em> wavelet coefficients. The decomposition propagates recursively: approximate coefficients go to the left child and detail coefficients go to the right child in the WPT tree.</p>
-<p><strong>Reconstruction</strong> reverses the process using synthesis filters <span class="math inline">\(h^*[\cdot]\)</span> and <span class="math inline">\(g^*[\cdot]\)</span>:</p>
-<p><span class="math display">\[y[2k] = \sum^{F/2}_{i=0} (w_{d}[k{-}i]g^*[2i] + w_{a}[k{-}i]h^*[2i])\]</span></p>
-<p><span class="math display">\[y[2k{+}1] = \sum^{F/2}_{i=0}(w_{d}[k{-}i]g^*[2i{+}1] + w_{a}[k{-}i]h^*[2i{+}1])\]</span></p>
-<p>When the filter banks are <strong>orthogonal</strong> (<span class="math inline">\(g[\cdot]\cdot g^*[\cdot]=h[\cdot]\cdot h^*[\cdot]=1/F\)</span>), the decomposition and reconstruction form an invertible linear transformation — WPD preserves the energy and details of the input signal. If <span class="math inline">\(w_{a}[k]\)</span> or <span class="math inline">\(w_d[k]\)</span> is missing, the corresponding term in the reconstruction is simply zero.</p>
-<p>Decomposing to level-<span class="math inline">\(L\)</span> requires the input length to be an exact multiple of <span class="math inline">\(2^L\)</span>. When the input is too short, we apply <strong>reflect padding</strong> at the tail to ensure continuity and alleviate edge distortion in the reconstructed signal.</p>
-</section>
-<section id="online-wpd-with-buffer-mechanism" class="level2">
-<h2 class="anchored" data-anchor-id="online-wpd-with-buffer-mechanism">Online WPD with Buffer Mechanism</h2>
-<section id="motivation" class="level3">
-<h3 class="anchored" data-anchor-id="motivation">Motivation</h3>
-<p>A naive WPD implementation stores <em>all</em> historical wavelet coefficients at every tree level, causing exponential space growth with tree depth — far exceeding the memory of typical FC boards. Processing all historical coefficients also exceeds their computational capacity. WARA addresses both problems with a <strong>buffer mechanism</strong> that reuses past computation results.</p>
-</section>
-<section id="buffer-size-derivation" class="level3">
-<h3 class="anchored" data-anchor-id="buffer-size-derivation">Buffer Size Derivation</h3>
-<p>WARA’s goal is to reconstruct only the latest induced signal estimate <span class="math inline">\(\hat{A}_P(t)\)</span> to compute the recovered measurement. According to the Mallat reconstruction equations, reconstructing at level-0 requires each level-1 node to provide at least <span class="math inline">\(F/2\)</span> wavelet coefficients. Let <span class="math inline">\(m(L)\)</span> be the number of coefficients each level-<span class="math inline">\(L\)</span> node must provide to level <span class="math inline">\(L-1\)</span>:</p>
-<p><span class="math display">\[m(L)=\left\{
-\begin{array}{ll}
-\frac{F}{2} &amp; L=1 \\
-\frac{F}{2} + \lceil \frac{m(L-1)-2}{2} \rceil &amp; L\ge 2
-\end{array}
-\right.\]</span></p>
-<p>The term <span class="math inline">\(\frac{F}{2}\)</span> accounts for reconstructing the last two outputs; <span class="math inline">\(\lceil \frac{m(L)-2}{2} \rceil\)</span> covers the remaining outputs. Since <span class="math inline">\(\lceil \frac{m(L)-2}{2} \rceil &lt; \frac{m(L)}{2}\)</span>, we can bound this by a simpler recurrence <span class="math inline">\(n(L)\)</span>:</p>
-<p><span class="math display">\[m(L) &lt; n(L) = F\cdot(1-\frac{1}{2^L}) &lt; F;\quad L\geq 1\]</span></p>
-<p>Therefore, <strong>storing the last <span class="math inline">\(F\)</span> wavelet coefficients at each node is sufficient</strong> for flawless reconstruction of <span class="math inline">\(\hat{A}_P(t)\)</span>. To keep these <span class="math inline">\(F\)</span> coefficients up to date, the decomposition requires <span class="math inline">\(3F\)</span> inputs. Reflect padding provides the last <span class="math inline">\(F\)</span> inputs, reducing the actual input length to <span class="math inline">\(2F\)</span>.</p>
-</section>
-<section id="buffer-design" class="level3">
-<h3 class="anchored" data-anchor-id="buffer-design">Buffer Design</h3>
-<p>Each WPT node maintains two buffers: - <strong>Decomposition buffer</strong> (length <span class="math inline">\(2F\)</span>) — stores recent sensor samples or parent coefficients for decomposition - <strong>Reconstruction buffer</strong> (length <span class="math inline">\(F+2\)</span>) — stores output coefficients for reconstruction (the extra 2 slots ensure proper data alignment)</p>
-<p>Each node also tracks a <strong>starting index</strong> <span class="math inline">\(i_{start}(t)\)</span>, initialized based on the node’s level <span class="math inline">\(L\)</span> and filter length <span class="math inline">\(F\)</span>:</p>
-<p><span class="math display">\[i_{start}(0) = ((F-1) \gg L) \mathbin{\&amp;} 1\]</span></p>
-<p>where <span class="math inline">\(\gg\)</span> is bit-wise right-shift and <span class="math inline">\(\&amp;\)</span> is bit-wise AND. When a new input enters the decomposition buffer, the index updates: <span class="math inline">\(i_{start}(t) = (i_{start}(t-1)+1) \bmod 2\)</span>. When two new inputs arrive at a level-<span class="math inline">\(L\)</span> node, the decomposition buffer of its level-<span class="math inline">\((L+1)\)</span> child shifts backward by one element to store the new wavelet coefficient. The starting index is then used to slice the correct subsequence from each buffer for wavelet decomposition and reconstruction — ensuring the online implementation remains consistent with the Mallat algorithm.</p>
-</section>
-<section id="three-procedures" class="level3">
-<h3 class="anchored" data-anchor-id="three-procedures">Three Procedures</h3>
-<p>WARA’s online WPD pipeline is driven by three procedures. Buffers shift forward as new sensor data arrives, and shift flags propagate from root to leaves, synchronizing computations across tree levels.</p>
-<p><strong>1. Buffer Management (ManageBuffer)</strong></p>
-<p>Each node’s shift flag is determined by its parent: a child shifts its buffer only when the parent’s buffer has shifted <em>and</em> the parent’s starting index equals 1 (indicating two new inputs have been accumulated). If no shift is needed, the node is skipped. When a shift occurs, the buffer slides backward by one position, discarding the oldest sample.</p>
-<p><strong>2. Online Decomposition</strong></p>
-<p>For each new sensor sample <span class="math inline">\(\tilde{x}(t)\)</span>: 1. Shift the root node buffer and insert <span class="math inline">\(\tilde{x}(t)\)</span> at the end 2. Traverse the tree depth-first. For each non-root node: - Manage buffer shift (propagated from parent) - Slice the parent’s input buffer starting at <span class="math inline">\(i_{start}(t)\)</span> - Apply the Mallat decomposition (Eq.1) to produce <span class="math inline">\(w[k]\)</span> - Store the coefficients in the current node’s buffer</p>
-<p><strong>3. Online Reconstruction with Recovery</strong></p>
-<p>For each new sample from the primary IMU: 1. Traverse the tree depth-first. At each leaf node: - If the node is <strong>anomalous and LF</strong>: subtract the corresponding coefficient from a redundant IMU instance, cancelling out benign motion while preserving the attack residual - If the node is <strong>anomalous and HF</strong>: zero out the coefficients (attack-only band) - If the node is <strong>attack-free</strong>: preserve coefficients as-is 2. When both children of a parent node are ready, reconstruct the parent’s output via the Mallat synthesis equations (Eqs.2–3), propagating upward 3. Read the recovered attack estimate <span class="math inline">\(\hat{A}_P(t)\)</span> from the root node’s reconstruction buffer 4. Return <span class="math inline">\(\hat{x}_P(t) = \tilde{x}_P(t) - \hat{A}_P(t)\)</span> — the recovered benign measurement</p>
-</section>
-</section>
-<section id="wpt-partition" class="level2">
-<h2 class="anchored" data-anchor-id="wpt-partition">WPT Partition</h2>
-<p>The partition of wavelet packets determines which frequency bands are monitored for attack interference. We use the <strong>Symlets 2</strong> wavelet (<span class="math inline">\(F=4\)</span>) <span class="citation" data-cites="daubechies1988orthonormal">(<a href="#ref-daubechies1988orthonormal" role="doc-biblioref">Daubechies 1988</a>)</span> and configure the WPT based on the drone’s motion signal characteristics.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../figures/WPT Packet Configuration.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Wavelet Packet Configuration (Single-IMU and Multi-IMU modes)"><img src="../figures/WPT Packet Configuration.png" class="img-fluid figure-img" style="width:95.0%" alt="Wavelet Packet Configuration (Single-IMU and Multi-IMU modes)"></a></p>
-<figcaption>Wavelet Packet Configuration (Single-IMU and Multi-IMU modes)</figcaption>
-</figure>
+<section id="vulnerability-of-vanilla-ardupilot" class="level2">
+<h2 class="anchored" data-anchor-id="vulnerability-of-vanilla-ardupilot">Vulnerability of Vanilla ArduPilot</h2>
+<p>We also demonstrate the inefficacy of vanilla ArduPilot <span class="citation" data-cites="ArduPilot">(<a href="#ref-ArduPilot" role="doc-biblioref"><span>“ArduPilot,”</span> n.d.</a>)</span> against the same attack setting on the F330 quadcopter. ArduPilot is considered less susceptible than PX4 as it enables low-pass filters in sensor hardware, implements a sophisticated dynamic notch filter, and applies stricter thresholds in its fail-safe logic <span class="citation" data-cites="kim2024systematic">(<a href="#ref-kim2024systematic" role="doc-biblioref">Kim et al. 2024</a>)</span>. Despite these measures, the drone with vanilla ArduPilot rapidly oscillates and crashes within five seconds, indicating that vanilla ArduPilot alone is insufficient to mitigate the real-world acoustic injection attack.</p>
+<div class="video-grid">
+<div class="video-card">
+<p><strong>F330 Remote Attack → Crash (0.20 rad/s)</strong></p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Bm8eF30axdE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </div>
-<section id="frequency-band-allocation" class="level3">
-<h3 class="anchored" data-anchor-id="frequency-band-allocation">Frequency Band Allocation</h3>
-<table style="width:100%;border-collapse:separate;border-spacing:0 4px;">
-<colgroup>
-<col style="width:22%">
-<col style="width:14%">
-<col style="width:16%">
-<col style="width:48%">
-</colgroup>
-<tbody><tr>
-<th>
-Band
-</th>
-<th>
-Range
-</th>
-<th>
-Depth
-</th>
-<th>
-Purpose
-</th>
-</tr>
-<tr>
-<td>
-<b>LF (Low Frequency)</b>
-</td>
-<td>
-0–20 Hz
-</td>
-<td>
-Level 6
-</td>
-<td>
-Captures drone motion signals (0–5 Hz) plus low-frequency attack interference near the motion band. Decomposed deeper for fine-grained isolation.
-</td>
-</tr>
-<tr>
-<td>
-<b>HF (High Frequency)</b>
-</td>
-<td>
-20–100 Hz
-</td>
-<td>
-Level 4
-</td>
-<td>
-Captures attack interference above the motion band. Shallower depth saves computation.
-</td>
-</tr>
-<tr>
-<td>
-<b>Rejected</b>
-</td>
-<td>
-&gt;100 Hz
-</td>
-<td>
-—
-</td>
-<td>
-Removed by the autopilot’s hardware low-pass filter; not processed.
-</td>
-</tr>
-</tbody></table>
-<p>The LF band is slightly broader than the motion signal band (0–5 Hz) to accurately capture attack interference that falls <em>within or near</em> the motion signal frequencies — the most critical type of interference for flight stability.</p>
-</section>
-<section id="single-imu-vs.-multi-imu-mode" class="level3">
-<h3 class="anchored" data-anchor-id="single-imu-vs.-multi-imu-mode">Single-IMU vs.&nbsp;Multi-IMU Mode</h3>
-<p>The assignment of level-6 wavelet packets depends on whether a redundant IMU instance is available:</p>
-<p><strong>Single-IMU mode:</strong> Wavelet packets <span class="math inline">\(w_{aaaddd}\)</span> through <span class="math inline">\(w_{aaadad}\)</span> are designated as <strong>HF attack packets</strong> and zeroed out during recovery. The remaining level-6 packets are preserved as-is to retain the motion signal. This conservative approach avoids distorting benign data but cannot remove low-frequency attack interference.</p>
-<p><strong>Multi-IMU mode:</strong> All level-6 wavelet packets are treated as <strong>LF attack packets</strong> and replaced with the corresponding coefficients from a redundant (reserved) IMU instance. Since the reserved IMU is unlikely to experience the <em>same</em> attack interference in the exact same time-frequency bins, its coefficients provide a clean substitute — enabling removal of even low-frequency interference without distorting the motion signal.</p>
+<div class="video-card">
+<p><strong>ArduPilot Rapid Crash (5s)</strong></p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Kh-PU02mgns" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</div>
+</div>
 
 
 
-</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-daubechies1988orthonormal" class="csl-entry" role="listitem">
-Daubechies, Ingrid. 1988. <span>“Orthonormal Bases of Compactly Supported Wavelets.”</span> <em>Communications on Pure and Applied Mathematics</em> 41 (7): 909–96.
+<div id="ref-ArduPilot" class="csl-entry" role="listitem">
+<span>“ArduPilot.”</span> n.d. <a href="https://ardupilot.org/">https://ardupilot.org/</a>.
+</div>
+<div id="ref-kim2024systematic" class="csl-entry" role="listitem">
+Kim, Hyungsub, Rwitam Bandyopadhyay, Muslum Ozgur Ozmen, et al. 2024. <span>“A Systematic Study of Physical Sensor Attack Hardness.”</span> <em><span>SP</span> ’24</em>, 2328–47.
+</div>
+<div id="ref-wang2024vimu" class="csl-entry" role="listitem">
+Wang, Yunbo, Cong Sun, Qiaosen Liu, et al. 2024. <span>“<span>VIMU:</span> Effective Physics-Based Realtime Detection and Recovery Against Stealthy Attacks on UAVs.”</span> <em><span>ACSAC</span> ’24</em>, 1015–31.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -849,13 +732,13 @@ Daubechies, Ingrid. 1988. <span>“Orthonormal Bases of Compactly Supported Wave
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../pages/attack-device.html" class="pagination-link" aria-label="Attack Device Design">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Attack Device Design</span>
+      <a href="../pages/detector-parameters.html" class="pagination-link" aria-label="Detector Parameter Selection">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Detector Parameter Selection</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../pages/detector-parameters.html" class="pagination-link" aria-label="Detector Parameter Selection">
-        <span class="nav-page-text">Detector Parameter Selection</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../pages/recovery-effectiveness.html" class="pagination-link" aria-label="Recovery Effectiveness">
+        <span class="nav-page-text">Recovery Effectiveness</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -873,38 +756,6 @@ Daubechies, Ingrid. 1988. <span>“Orthonormal Bases of Compactly Supported Wave
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
-(function() {
-  let previousOnload = window.onload;
-  window.onload = () => {
-    if (previousOnload) {
-      previousOnload();
-    }
-    lightboxQuarto.on('slide_before_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      const href = trigger.getAttribute('href');
-      if (href !== null) {
-        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-        if (imgEl !== null) {
-          const srcAttr = imgEl.getAttribute("src");
-          if (srcAttr && srcAttr.startsWith("data:")) {
-            slideConfig.href = srcAttr;
-          }
-        }
-      } 
-    });
-  
-    lightboxQuarto.on('slide_after_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(slideNode);
-      }
-    });
-  
-  };
-  
-})();
-          </script>
 
 
 

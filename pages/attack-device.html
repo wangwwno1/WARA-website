@@ -218,6 +218,12 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pages/real-world-flights.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Real-World Flight Tests</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
@@ -249,10 +255,8 @@ window.Quarto = {
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#hardware" id="toc-hardware" class="nav-link" data-scroll-target="#hardware">Hardware</a></li>
-  <li><a href="#remote-attack-in-lab-setting" id="toc-remote-attack-in-lab-setting" class="nav-link" data-scroll-target="#remote-attack-in-lab-setting">Remote Attack in Lab Setting</a></li>
-  <li><a href="#from-emitter-arrays-to-closer-range-attacks" id="toc-from-emitter-arrays-to-closer-range-attacks" class="nav-link" data-scroll-target="#from-emitter-arrays-to-closer-range-attacks">From Emitter Arrays to Closer-Range Attacks</a></li>
+  <li><a href="#remote-attack-from-lab-to-real-world" id="toc-remote-attack-from-lab-to-real-world" class="nav-link" data-scroll-target="#remote-attack-from-lab-to-real-world">Remote Attack: From Lab to Real-World</a></li>
   <li><a href="#transducer-layout-on-flight-controllers" id="toc-transducer-layout-on-flight-controllers" class="nav-link" data-scroll-target="#transducer-layout-on-flight-controllers">Transducer Layout on Flight Controllers</a></li>
-  <li><a href="#real-world-flight-tests" id="toc-real-world-flight-tests" class="nav-link" data-scroll-target="#real-world-flight-tests">Real-World Flight Tests</a></li>
   </ul>
 </nav>
 </nav>
@@ -302,20 +306,25 @@ window.Quarto = {
 </ul>
 <p>By adjusting pulse-width and frequency, the microcontroller independently controls the amplitude and frequency of the acoustic signal on each PWM channel. Generally, this device achieves remote attack amplitudes ranging from <strong>0.2 to 2.0 rad/s</strong> on each targeted IMU — broader coverage than prior work <span class="citation" data-cites="jeong2023rocking gao2023exploring">(<a href="#ref-jeong2023rocking" role="doc-biblioref">Jeong et al. 2023</a>; <a href="#ref-gao2023exploring" role="doc-biblioref">Gao et al. 2024</a>)</span>.</p>
 </section>
-<section id="remote-attack-in-lab-setting" class="level2">
-<h2 class="anchored" data-anchor-id="remote-attack-in-lab-setting">Remote Attack in Lab Setting</h2>
+<section id="remote-attack-from-lab-to-real-world" class="level2">
+<h2 class="anchored" data-anchor-id="remote-attack-from-lab-to-real-world">Remote Attack: From Lab to Real-World</h2>
 <p>We demonstrated remote multi-IMU attacks in a laboratory setting. Commercial flight controllers typically equip multiple heterogeneous IMUs for redundancy, and each IMU model has a distinct resonance frequency band. Because these bands rarely overlap, an attacker cannot compromise all IMUs with a single acoustic frequency — hence the need for <strong>simultaneous multi-frequency injection</strong>.</p>
 <p>For each target IMU, we assemble a dedicated <span class="math inline">\(2 \times 2\)</span> ultrasonic emitter array placed 25 cm from the flight controller. Each array emits acoustic signals tuned to the resonance frequency band of its target IMU. During evaluation, the drone motors were armed to assess the impact of motor noise on attack effectiveness.</p>
+<p>The multi-IMU acoustic attacks generated with our attack unit can effectively overwhelm the IMU redundancy mechanisms. We inject remote acoustic attack signals simultaneously at different frequencies, each matching the resonance band of a target IMU. We examine inter-signal interference by injecting the attack waves from the same orientation to the FC board. Our emitter arrays can conduct effective remote multi-IMU attacks from several orientations.</p>
+<p>Compared to the <span class="math inline">\(2 \times 2\)</span> array, a single emitter can achieve similar amplitudes at 7 cm. Reducing this distance further to 1 cm increases the attack amplitude to approximately 2.2 rad/s on a BMI055 IMU, enabling the onboard attack unit deployment used in our real-world flight tests (detailed on the <a href="../pages/real-world-flights.html">Real-World Flight Tests</a> page).</p>
+<p>To illustrate that the attack amplitudes of around 0.20 rad/s on ICM-42688P and MPU-6000 are effective, our real flight tests demonstrate that such amplitudes can cause a drone to crash if the induced frequency falls within the motion signal band.</p>
+<p>Note that the ground truth collection in real flight tests differs from the collection in the laboratory. In real flights, the drone takes another attack-free FC board to ensure flight safety and provide attack-free ground truths. We record the drone’s motion signals with the IMUs on this attack-free board as the ground truth. We calculate the error between compromised and ground-truth measurements, and the largest error defines the maximum attack amplitude.</p>
+<p>The lab video demonstrates simultaneous multi-IMU injection in a controlled setting; the flight video shows that even moderate amplitudes (~0.20 rad/s) cause a real drone to crash.</p>
 <div class="video-grid">
 <div class="video-card">
 <p><strong>Multi-IMU Remote Attack Demonstration (Lab)</strong></p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/HqhufvUzA5o" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </div>
+<div class="video-card">
+<p><strong>F330 Remote Attack → Crash (Real-World, 0.20 rad/s)</strong></p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Bm8eF30axdE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </div>
-</section>
-<section id="from-emitter-arrays-to-closer-range-attacks" class="level2">
-<h2 class="anchored" data-anchor-id="from-emitter-arrays-to-closer-range-attacks">From Emitter Arrays to Closer-Range Attacks</h2>
-<p>Interestingly, we observed that a <strong>single ultrasonic emitter</strong> at 7 cm can achieve similar attack amplitudes as a full <span class="math inline">\(2 \times 2\)</span> array at 25 cm. Inspired by this, we developed closer-range attacks at just 1 cm to further increase attack intensity. This compact setup — a single emitter placed near the IMU — can be deployed directly on the drone for real-world flight tests, achieving attack amplitudes up to ~2.2 rad/s on the BMI055 IMU.</p>
+</div>
 <p>Although our prototype is limited to short range, long-range attacks remain viable with high-power hardware (e.g., a Genasys LRAD 1950XL <span class="citation" data-cites="genasys2025lrad">(<a href="#ref-genasys2025lrad" role="doc-biblioref">Genasys 2025</a>)</span> could achieve equivalent intensity at over 12 meters <span class="citation" data-cites="son2015rocking">(<a href="#ref-son2015rocking" role="doc-biblioref">Son et al. 2015</a>)</span>).</p>
 </section>
 <section id="transducer-layout-on-flight-controllers" class="level2">
@@ -339,20 +348,6 @@ window.Quarto = {
 <p><a href="../figures/PZT Layout/Drone Layout - 6C Mini Remote.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Mounted on F330 quadcopter"><img src="../figures/PZT Layout/Drone Layout - 6C Mini Remote.jpg" class="img-fluid figure-img" alt="Mounted on F330 quadcopter"></a></p>
 <figcaption>Mounted on F330 quadcopter</figcaption>
 </figure>
-</div>
-</div>
-</section>
-<section id="real-world-flight-tests" class="level2">
-<h2 class="anchored" data-anchor-id="real-world-flight-tests">Real-World Flight Tests</h2>
-<p>The attack device was deployed on an F330 quadcopter for real-world flight testing. Even at low amplitudes (~0.20 rad/s), remote attacks can cause an unprotected drone to crash.</p>
-<div class="video-grid">
-<div class="video-card">
-<p><strong>F330 Remote Attack → Crash (Real-World, 0.20 rad/s)</strong></p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Bm8eF30axdE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-</div>
-<div class="video-card">
-<p><strong>F330 Dual-IMU Attack on Vanilla ArduPilot (No WARA)</strong></p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/ixKhjv_T_vQ" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </div>
 </div>
 
