@@ -224,17 +224,6 @@
     ]
   },
   {
-    "objectID": "index.html#cite-this-paper",
-    "href": "index.html#cite-this-paper",
-    "title": "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-    "section": "Cite This Paper",
-    "text": "Cite This Paper\n@inproceedings{wang2026wara,\n  title     = {{WARA}: Wavelet-based Realtime Recovery against\n               Acoustic Injection Attacks on {UAV}},\n  author    = {Yunbo Wang and Cong Sun and Qiaosen Liu},\n  booktitle = {To appear},\n  year      = {2026},\n  note      = {Preprint available on request}\n}",
-    "crumbs": [
-      "WARA: Wavelet-based Realtime Recovery against Acoustic Injection Attacks on UAV",
-      "Home"
-    ]
-  },
-  {
     "objectID": "pages/attack-device.html",
     "href": "pages/attack-device.html",
     "title": "Attack Device Design",
