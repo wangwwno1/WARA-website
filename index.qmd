@@ -69,7 +69,7 @@ Implemented on PX4 autopilot (CUAV V5+, Pixhawk 6C Mini). Real-world flight test
 :::
 
 :::
-
+<!-- 
 ## Cite This Paper
 
 ```bibtex
@@ -82,3 +82,4 @@ Implemented on PX4 autopilot (CUAV V5+, Pixhawk 6C Mini). Real-world flight test
   note      = {Preprint available on request}
 }
 ```
+-->
